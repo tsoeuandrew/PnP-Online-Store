@@ -398,3 +398,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+PNP-ONLINE-STORE/manager-app/src/main.py

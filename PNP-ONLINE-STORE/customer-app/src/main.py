@@ -1,24 +1,17 @@
 import flet as ft
 import requests,json
 
-
 def main(page: ft.Page):
-    # Set page properties for mobile-like window size
-    page.title = "Pick an Pay Online Store"
-    page.window_full_screen = True  # Enable fullscreen mode
-    page.window_resizable = True  # Allow resizing
-    page.scroll = ft.ScrollMode.ALWAYS  # Enable scrolling for the entire page
+    page.title = "My Flet App"
+    page.bgcolor = "lightblue"
+    page.window_width = 800
+    page.window_height = 600
+    page.window_resizable = False
 
+    btn = ft.ElevatedButton("Click Me", on_click=lambda e: print("Button clicked!"))
+    page.add(btn)
+    page.update()
 
-   
-    page.add(
-        ft.SafeArea(
-            ft.Container(
-                alignment=ft.alignment.center,
-            ),
-            expand=True,
-        )
-    )
-
+ft.app(target=main)
 
 ft.app(main)
