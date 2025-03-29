@@ -1,21 +1,19 @@
 import flet as ft
+import requests,json
 
 
 def main(page: ft.Page):
-    counter = ft.Text("0", size=50, data=0)
+    # Set page properties for mobile-like window size
+    page.title = "Pick an Pay Online Store"
+    page.window_full_screen = True  # Enable fullscreen mode
+    page.window_resizable = True  # Allow resizing
+    page.scroll = ft.ScrollMode.ALWAYS  # Enable scrolling for the entire page
 
-    def increment_click(e):
-        counter.data += 1
-        counter.value = str(counter.data)
-        counter.update()
 
-    page.floating_action_button = ft.FloatingActionButton(
-        icon=ft.Icons.ADD, on_click=increment_click
-    )
+   
     page.add(
         ft.SafeArea(
             ft.Container(
-                counter,
                 alignment=ft.alignment.center,
             ),
             expand=True,
