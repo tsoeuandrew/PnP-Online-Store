@@ -1,5 +1,17 @@
 {
     "python.analysis.autoFormatStrings": true,
     "python.analysis.autoImportCompletions": true,
-    "python.analysis.displayEnglishDiagnostics": true
+    "python.analysis.displayEnglishDiagnostics": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "database": "Pick-an-Pay",
+            "username": "tsoeuandrew",
+            "name": "postgres",
+            "password": "Thabi@02"
+        }
+    ]
 }

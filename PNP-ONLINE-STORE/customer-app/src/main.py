@@ -1,49 +1,271 @@
+from atexit import register
+from click import password_option
 import flet as ft
-import requests,json
+import requests
+import json
 
 def main(page: ft.Page):
-    page.title = "My Flet App"
-    page.bgcolor = "black"                  
+    page.title = "Pick an Pay Online Store"
+    page.bgcolor = "black"                   
     page.window_maximized = True            
     page.window_resizable = True
-    page.theme_mode = ft.ThemeMode.LIGHT  # Set theme mode
-    image = ft.Image(src=r"C:\\Users\\andre\\Documents\\GitHub\\PNP-ONLINE-STORE\\cover", width=150, height=150)
+    page.theme_mode = ft.ThemeMode.DARK
 
+    image = ft.Image(src="cover.jpg", width=150, height=150)
 
-    def toggle_theme(e):            
-        page.theme_mode = (
-            ft.ThemeMode.DARK if page.theme_mode == ft.ThemeMode.LIGHT else ft.ThemeMode.LIGHT
-        )
+    # Feedback for different fields
+    username_feedback = ft.Text(color="red", weight="bold")
+    id_feedback = ft.Text(color="red", weight="bold")
+    feedback = ft.Text(color="red", weight="bold")
+
+    # Clear errors when submitting the form
+    def clear_feedback():
+        username_feedback.value = ""
+        id_feedback.value = ""
+        feedback.value = ""
+    
+    # Create input and output controls
+    id_number = ft.TextField(label="Enter ID Number", autofocus=True)
+    input_box = ft.TextField(label="Enter name")
+    username = ft.TextField(label="Enter username")
+    mobile = ft.TextField(label="Enter Mobile Number")
+    password = ft.TextField(label="Enter Password")
+    address = ft.TextField(label="Physical Address", height=100, multiline=True)
+    output = ft.Text()
+
+    def toggle_theme(e):                    
+        page.theme_mode = ft.ThemeMode.LIGHT if page.theme_mode == ft.ThemeMode.DARK else ft.ThemeMode.DARK
         page.update()
 
-    def home_page(page: ft.Page):
+    def send_name(e):
+        response = requests.post("http://localhost:5000/api/hello", json={"name": input_box.value})
+        output.value = response.json().get("reply")
+        page.update()
+
+    def save_data(e):
+        clear_feedback()
+        user_data = "data.json"
+
+        # Prepare the user data to be saved as a dictionary
+        info = {
+            "username": username.value,
+            "ID Number": id_number.value,
+            "Mobile Number": mobile.value,
+            "Physical Address": address.value,
+        }
+        
+        try:
+            new_id = id_number.value  # Get the ID from the input field to search for duplicates
+            try:
+                with open(user_data, 'r') as file:  # Open the file in read mode
+                    data = json.load(file)  # Load existing JSON data
+            except (FileNotFoundError, json.JSONDecodeError):
+                data = []    #If file doesn't exist or is invalid, initialize an empty list
+            
+            for record in data:  # Loop through each record in the data
+                if record.get("ID Number") == new_id:  # ID found
+                    feedback.value = "You are already in the database."
+                    page.update() 
+                    return  # Exit the loop after finding the ID
+            
+            data.append(info)  # Append the new user info to the list
+            with open(user_data, 'w') as file:  # Open the file and rewrite the updated data
+                json.dump(data, file, indent=4)  # Save the list with indentation for readability
+            feedback.value = "Data saved successfully!"  # Success feedback
+            page.go("/two")  # Go to home page
+
+        except Exception as e:
+            feedback.value = f"Error saving data: {str(e)}"  # Error feedback
+
+        finally:
+            page.update()  # Update the page to reflect the feedback
+
+    def save():
         return ft.View(
-            "/",
+            "/thirteen",
             controls=[
-                ft.Text("Welcome to the Home Page", size=20),
-                ft.Switch(label="Dark Mode", on_change=toggle_theme),
-                ft.ElevatedButton("Go to Second Page", on_click=lambda e: page.go("/second"))
+                image,
+                ft.Text("Pick an Pay Online Store", size=30),
+                username,
+                password,
+                id_number,
+                mobile,
+                ft.ElevatedButton("Login", on_click=save_data),
+                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+                feedback
             ],
         )
 
-    def second_page(page: ft.Page):
+    def login_page():
         return ft.View(
-            "/second",
+            "/",
             controls=[
-            ft.Text("This is the Second Page", size=20),
-            ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/"))
+                image,
+                ft.Text("Pick an Pay Online Store", size=50),
+                username,
+                password,
+                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+                ft.Switch(label="Theme", on_change=toggle_theme)
+            ],
+        )
+
+    def home_page():
+        return ft.View(
+            "/two",
+            controls=[
+                image,
+                ft.Text("Pick an Pay Online Store", size=30),
+                ft.Switch(label="Theme", on_change=toggle_theme),
+                input_box,
+                ft.ElevatedButton("Send", on_click=send_name),
+                output,
+                ft.Row([
+                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
+                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
+                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
+                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
+                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
+                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
+                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
+                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
+                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
+                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
+                )
+            ],
+        )
+    
+    def fruits():
+        return ft.View(
+            "/third",
+            controls=[
+                image,
+                ft.Text("Pick an Pay Online Store", size=30),
+                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+            ],
+        )
+    
+    def Vegetables():
+        return ft.View(
+            "/four",
+            controls=[
+                image,
+                ft.Text("Pick an Pay Online Store", size=30),
+                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+            ],
+        )
+
+    def meat():
+        return ft.View(
+            "/five",
+            controls=[
+                image,
+                ft.Text("Pick an Pay Online Store", size=30),
+                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+            ],
+        )
+    
+    def drinks():
+        return ft.View(
+            "/six",
+            controls=[
+                image,
+                ft.Text("Pick an Pay Online Store", size=30),
+                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+            ],
+        )
+    
+    def snacks():
+        return ft.View(
+            "/seven",
+            controls=[
+                image,
+                ft.Text("Pick an Pay Online Store", size=30),
+                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+            ],
+        )
+    
+    def bakery():
+        return ft.View(
+            "/eight",
+            controls=[
+                image,
+                ft.Text("Pick an Pay Online Store", size=30),
+                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+            ],
+        )
+    
+    def dairy():
+        return ft.View(
+            "/nine",
+            controls=[
+                image,
+                ft.Text("Pick an Pay Online Store", size=30),
+                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+            ],
+        )
+
+    def Grains_Pasta():
+        return ft.View(
+            "/ten",
+            controls=[
+                image,
+                ft.Text("Pick an Pay Online Store", size=30),
+                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+            ],
+        )
+    
+    def Bath_Stuff():
+        return ft.View(
+            "/eleven",
+            controls=[
+                image,
+                ft.Text("Pick an Pay Online Store", size=30),
+                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+            ],
+        )
+    
+    def Breakfast():
+        return ft.View(
+            "/twelve",
+            controls=[
+                image,
+                ft.Text("Pick an Pay Online Store", size=30),
+                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
             ],
         )
 
     def route_change(route):
         page.views.clear()
         if page.route == "/":
-            page.views.append(home_page(page))
-        elif page.route == "/second":
-            page.views.append(second_page(page))
+            page.views.append(login_page())
+        elif page.route == "/two":
+            page.views.append(home_page())
+        elif page.route == "/third":
+            page.views.append(fruits())
+        elif page.route == "/four":
+            page.views.append(Vegetables())
+        elif page.route == "/five":
+            page.views.append(meat())
+        elif page.route == "/six":
+            page.views.append(drinks())
+        elif page.route == "/seven":
+            page.views.append(snacks())
+        elif page.route == "/eight":
+            page.views.append(bakery())
+        elif page.route == "/nine":
+            page.views.append(dairy())
+        elif page.route == "/ten":
+            page.views.append(Grains_Pasta())
+        elif page.route == "/eleven":
+            page.views.append(Bath_Stuff())
+        elif page.route == "/twelve":
+            page.views.append(Breakfast())
+        elif page.route == "/thirteen":
+            page.views.append(save())
         page.update()
-    
+
     page.on_route_change = route_change
     page.go(page.route)
 
-ft.app(target=main)
+ft.app(target=main, port=5000)
