@@ -1,75 +1,53 @@
-from flask import Flask, request, jsonify
-import json
-import os
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
-INVENTORY_FILE = "inventory.json"
 
-# Load inventory from JSON file
-def load_inventory():
-    if not os.path.exists(INVENTORY_FILE):
-        return {"products": []}
-    with open(INVENTORY_FILE, "r") as f:
-        return json.load(f)
+products = me.json
 
-# Save inventory to JSON file
-def save_inventory(data):
-    with open(INVENTORY_FILE, "w") as f:
-        json.dump(data, f, indent=4)
-
-# API: Get all products
-@app.route('/products', methods=['GET'])
+# Endpoint for customers to view products
+@app.route('/api/products', methods=['GET'])
 def get_products():
-    inventory = load_inventory()
-    return jsonify(inventory["products"])
+    return jsonify(products)
 
-# API: Place an order
-@app.route('/order', methods=['POST'])
+# Endpoint for customers to place an order
+@app.route('/api/order', methods=['POST'])
 def place_order():
-    inventory = load_inventory()
-    data = request.get_json()
-    product_id = data['product_id']
-    quantity = int(data['quantity'])
+    data = request.json
+    product_name = data.get("product")
+    quantity = data.get("quantity", 1)
     
-    for product in inventory["products"]:
-        if product["id"] == product_id:
-            if product["stock"] >= quantity:
-                product["stock"] -= quantity
-                save_inventory(inventory)
-                return jsonify({"message": f"Ordered {quantity} of {product['name']} successfully!"})
-            else:
-                return jsonify({"error": "Not enough stock!"}, 400)
-    return jsonify({"error": "Product not found!"}, 404)
-
-# API: Add a new product
-@app.route('/add_product', methods=['POST'])
-def add_product():
-    inventory = load_inventory()
-    data = request.get_json()
-    new_product = {
-        "id": str(len(inventory["products"]) + 1),  # Simple ID generation
-        "name": data['name'],
-        "stock": int(data['stock']),
-        "price": float(data['price'])
-    }
-    inventory["products"].append(new_product)
-    save_inventory(inventory)
-    return jsonify({"message": f"Added {new_product['name']} to inventory!"})
-
-# API: Update stock
-@app.route('/update_stock', methods=['POST'])
-def update_stock():
-    inventory = load_inventory()
-    data = request.get_json()
-    product_id = data['product_id']
-    new_stock = int(data['new_stock'])
+    if product_name not in products:
+        return jsonify({"error": "Product not found"}), 404
+    if products[product_name]["quantity"] < quantity:
+        return jsonify({"error": "Not enough stock"}), 400
     
-    for product in inventory["products"]:
-        if product["id"] == product_id:
-            product["stock"] = new_stock
-            save_inventory(inventory)
-            return jsonify({"message": f"Updated stock for {product['name']} to {new_stock}!"})
-    return jsonify({"error": "Product not found!"}, 404)
+    products[product_name]["quantity"] -= quantity
+    total_cost = products[product_name]["price"] * quantity
+    return jsonify({
+        "message": f"Ordered {quantity} {product_name}(s) successfully",
+        "total_cost": total_cost
+    })
+
+
+# Endpoint for managers to add or update products (now with category)
+@app.route('/api/manage_product', methods=['POST'])
+def manage_product():
+    data = request.json
+    product_name = data.get("product")      # Product name
+    quantity = data.get("quantity", 0)      # Quantity
+    price = data.get("price", 0.0)          # Price
+    category = data.get("category", "Other") # Category (default to "Other" if not provided)
+
+    # If product exists, update quantity, price, and category
+    if product_name in products:
+        products[product_name]["quantity"] = quantity
+        products[product_name]["price"] = price
+        products[product_name]["category"] = category
+        return jsonify({"message": f"Updated {product_name} to {quantity} in stock, price ${price}, category {category}"})
+    # If product doesn’t exist, add it
+    else:
+        products[product_name] = {"quantity": quantity, "price": price, "category": category}
+        return jsonify({"message": f"Added {product_name} with {quantity} in stock, price ${price}, category {category}"})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

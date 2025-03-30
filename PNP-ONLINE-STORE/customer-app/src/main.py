@@ -1,5 +1,3 @@
-from atexit import register
-from click import password_option
 import flet as ft
 import requests
 import json
@@ -32,6 +30,16 @@ def main(page: ft.Page):
     password = ft.TextField(label="Enter Password")
     address = ft.TextField(label="Physical Address", height=100, multiline=True)
     output = ft.Text()
+
+    #open products file
+    try:
+        with open("products.json", "r") as file:
+        products_data = json.load(file)
+        print("Products loaded successfully!")
+    except FileNotFoundError:
+        print("Error: The file 'products.json' was not found.")
+    except json.JSONDecodeError:
+        print("Error: The file 'products.json' contains invalid JSON.")
 
     def toggle_theme(e):                    
         page.theme_mode = ft.ThemeMode.LIGHT if page.theme_mode == ft.ThemeMode.DARK else ft.ThemeMode.DARK
@@ -80,22 +88,6 @@ def main(page: ft.Page):
         finally:
             page.update()  # Update the page to reflect the feedback
 
-    def save():
-        return ft.View(
-            "/thirteen",
-            controls=[
-                image,
-                ft.Text("Pick an Pay Online Store", size=30),
-                username,
-                password,
-                id_number,
-                mobile,
-                ft.ElevatedButton("Login", on_click=save_data),
-                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
-                feedback
-            ],
-        )
-
     def login_page():
         return ft.View(
             "/",
@@ -105,6 +97,7 @@ def main(page: ft.Page):
                 username,
                 password,
                 ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+                ft.ElevatedButton("Create new Acount", on_click=lambda e: page.go("/thirteen")),
                 ft.Switch(label="Theme", on_change=toggle_theme)
             ],
         )
@@ -141,6 +134,18 @@ def main(page: ft.Page):
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Row([
+                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
+                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
+                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
+                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
+                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
+                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
+                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
+                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
+                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
+                ),           #end row
                 ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
             ],
         )
@@ -151,6 +156,18 @@ def main(page: ft.Page):
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Row([
+                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
+                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
+                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
+                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
+                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
+                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
+                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
+                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
+                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
+                ),
                 ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
             ],
         )
@@ -161,6 +178,18 @@ def main(page: ft.Page):
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Row([
+                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
+                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
+                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
+                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
+                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
+                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
+                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
+                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
+                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
+                ),
                 ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
             ],
         )
@@ -171,6 +200,18 @@ def main(page: ft.Page):
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Row([
+                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
+                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
+                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
+                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
+                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
+                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
+                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
+                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
+                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
+                ),
                 ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
             ],
         )
@@ -181,6 +222,18 @@ def main(page: ft.Page):
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Row([
+                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
+                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
+                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
+                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
+                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
+                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
+                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
+                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
+                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
+                ),
                 ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
             ],
         )
@@ -191,6 +244,18 @@ def main(page: ft.Page):
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Row([
+                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
+                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
+                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
+                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
+                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
+                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
+                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
+                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
+                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
+                ),
                 ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
             ],
         )
@@ -201,6 +266,18 @@ def main(page: ft.Page):
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Row([
+                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
+                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
+                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
+                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
+                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
+                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
+                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
+                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
+                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
+                ),
                 ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
             ],
         )
@@ -211,6 +288,18 @@ def main(page: ft.Page):
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Row([
+                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
+                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
+                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
+                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
+                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
+                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
+                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
+                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
+                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
+                ),
                 ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
             ],
         )
@@ -221,6 +310,18 @@ def main(page: ft.Page):
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Row([
+                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
+                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
+                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
+                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
+                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
+                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
+                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
+                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
+                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
+                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
+                ),
                 ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
             ],
         )
@@ -231,7 +332,35 @@ def main(page: ft.Page):
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Row([
+                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
+                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
+                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
+                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
+                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
+                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
+                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
+                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
+                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
+                ),
                 ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+            ],
+        )
+    
+    def save_user():
+        return ft.View(
+            "/thirteen",
+            controls=[
+                image,
+                ft.Text("Pick an Pay Online Store", size=30),
+                username,
+                password,
+                id_number,
+                mobile,
+                ft.ElevatedButton("Login", on_click=save_data),
+                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+                feedback
             ],
         )
 
@@ -262,7 +391,7 @@ def main(page: ft.Page):
         elif page.route == "/twelve":
             page.views.append(Breakfast())
         elif page.route == "/thirteen":
-            page.views.append(save())
+            page.views.append(save_user())
         page.update()
 
     page.on_route_change = route_change
