@@ -247,8 +247,6 @@ def main(page: ft.Page):
     def bakery():
         price_controls = [ft.Text(f"Price: R{product['price']:.2f}") for product in products_data.get("Bakery", [])]
         name_controls = [ft.Text(product["name"], weight="bold") for product in products_data.get("Bakery", [])]
-    
-        # Creating image controls for each product, with a default image if not found
         image_controls = [
             ft.Image(   # Get image source from the product, or use a default if not available
                 src=product.get("image", product.get("ïmage", "bakery/default.png")),  # Default path if no image
@@ -278,9 +276,7 @@ def main(page: ft.Page):
             controls=[
                 ft.Text("Pick An Pay Online Store", size=50),
                 ft.Column(
-                    image_controls,
-                    name_controls,
-                    price_controls),            #view image and price under samething
+                    controls=product_columns),         #view image and price under same thing
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
