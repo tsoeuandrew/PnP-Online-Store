@@ -246,15 +246,32 @@ def main(page: ft.Page):
     
     def bakery():
         price_controls = [ft.Text(f"Price: R{product['price']:.2f}") for product in products_data.get("Bakery", [])]
-        name_controls = [ft.Text(product["name"],weight="bold") for product in products_data.get("Bakery", {})]
+        name_controls = [ft.Text(product["name"], weight="bold") for product in products_data.get("Bakery", [])]
+    
+        # Creating image controls for each product, with a default image if not found
         image_controls = [
-            ft.Image(   #get directory of image from json file if not found create default directory
-                src=product.get("image", product.get("ïmage", "bakery/default.png")),
-                width=150, height=150,  #how big the image sholud 
-                fit=ft.ImageFit.CONTAIN,        #make image to fit to provided size
-                error_content=ft.Text("No image")
-            ) for product in products_data.get("Bakery", [])
+            ft.Image(   # Get image source from the product, or use a default if not available
+                src=product.get("image", product.get("ïmage", "bakery/default.png")),  # Default path if no image
+                width=150, height=150,  # Image dimensions
+                fit=ft.ImageFit.CONTAIN,  # Ensure the image fits within the defined size
+                error_content=ft.Text("No image")  # Text to display if the image can't be loaded
+            ) for product in products_data.get("Bakery", [])  # Loop over all products in the "Bakery" category
         ]
+
+        # Group the products into rows, with each row containing 8 items (image, name, and price)
+        product_columns = []
+        for i in range(0, len(image_controls), 8):  # Loop over the image controls in chunks of 8
+            row = ft.Row(
+                controls=[  # Create a column for each product
+                    ft.Column(
+                        controls=[image_controls[i], name_controls[i], price_controls[i]],  # Each product has its image, name, and price
+                        alignment=ft.MainAxisAlignment.CENTER  # Center the content within each column
+                    )
+                    for i in range(i, min(i + 8, len(image_controls)))  # Handle a partial row if the last chunk is less than 8 items
+                ],
+                alignment=ft.MainAxisAlignment.CENTER  # Center the entire row horizontally
+            )
+            product_columns.append(row)  # Add the row to the list of rows
 
         return ft.View(
             "/eight",
