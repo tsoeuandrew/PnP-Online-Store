@@ -33,12 +33,13 @@ def main(page: ft.Page):
 
     #open inventory file
     try:
-        products_data = []
+        products_data = {}
         with open("inventory.json", "r") as file:
             products_data = json.load(file)
         print("Products loaded successfully!")
     except FileNotFoundError:
         print("Error: The file 'inventory.json' was not found.")
+        file = open("inventory.json", "w")              #create new inventory if no iventory found
     except json.JSONDecodeError:
         print("Error: The file 'inventory.json' contains invalid JSON.")
 
@@ -346,7 +347,7 @@ def main(page: ft.Page):
         )
     
     def Breakfast():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Breakfast", {})]
+        product_controls = [ft.Text(product["name"]) for product in products_data("Breakfast", [])]
         return ft.View(
             "/twelve",
             controls=[
