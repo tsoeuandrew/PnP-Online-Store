@@ -323,7 +323,7 @@ def main(page: ft.Page):
         )
     
     def Bath_Stuff():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Bath Stuff", {})]
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Bath Stuff", [])]
         return ft.View(
             "/eleven",
             controls=[
@@ -347,7 +347,7 @@ def main(page: ft.Page):
         )
     
     def Breakfast():
-        product_controls = [ft.Text(product["name"]) for product in products_data("Breakfast", [])]
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Breakfast", [])]
         return ft.View(
             "/twelve",
             controls=[
