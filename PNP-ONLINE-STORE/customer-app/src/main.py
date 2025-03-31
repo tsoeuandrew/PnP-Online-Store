@@ -31,7 +31,7 @@ def main(page: ft.Page):
     address = ft.TextField(label="Physical Address", height=100, multiline=True)
     output = ft.Text()
 
-    #open products file
+    #open inventory file
     try:
         with open("inventory.json", "r") as file:
             products_data = json.load(file)
@@ -129,7 +129,7 @@ def main(page: ft.Page):
         )
     
     def fruits():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Fruits", [])]
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Fruits", {})]
         return ft.View(
             "/third",
             controls=[
@@ -153,7 +153,7 @@ def main(page: ft.Page):
         )
     
     def Vegetables():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Vegetables", [])]
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Vegetables", {})]
         return ft.View(
             "/four",
             controls=[
@@ -177,7 +177,7 @@ def main(page: ft.Page):
         )
 
     def meat():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Meat", [])]
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Meat", {})]
         return ft.View(
             "/five",
             controls=[
@@ -201,7 +201,7 @@ def main(page: ft.Page):
         )
     
     def drinks():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Drinks", [])]
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Drinks", {})]
         return ft.View(
             "/six",
             controls=[
@@ -225,7 +225,7 @@ def main(page: ft.Page):
         )
     
     def snacks():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Snacks", [])]
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Snacks", {})]
         return ft.View(
             "/seven",
             controls=[
@@ -249,7 +249,7 @@ def main(page: ft.Page):
         )
     
     def bakery():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Bakery", [])]
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Bakery", {})]
         return ft.View(
             "/eight",
             controls=[
@@ -273,7 +273,7 @@ def main(page: ft.Page):
         )
     
     def dairy():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Dairy", [])]
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Dairy", {})]
         return ft.View(
             "/nine",
             controls=[
@@ -297,7 +297,7 @@ def main(page: ft.Page):
         )
 
     def Grains_Pasta():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Grains & Pasta", [])]
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Grains & Pasta", {})]
         return ft.View(
             "/ten",
             controls=[
@@ -321,7 +321,7 @@ def main(page: ft.Page):
         )
     
     def Bath_Stuff():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Bath Stuff", [])]
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Bath Stuff", {})]
         return ft.View(
             "/eleven",
             controls=[
@@ -345,7 +345,7 @@ def main(page: ft.Page):
         )
     
     def Breakfast():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Breakfast", [])]
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Breakfast", {})]
         return ft.View(
             "/twelve",
             controls=[
