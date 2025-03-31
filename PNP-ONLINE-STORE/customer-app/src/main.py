@@ -129,11 +129,13 @@ def main(page: ft.Page):
         )
     
     def fruits():
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Fruits", [])]
         return ft.View(
             "/third",
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
                     ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
@@ -151,11 +153,13 @@ def main(page: ft.Page):
         )
     
     def Vegetables():
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Vegetables", [])]
         return ft.View(
             "/four",
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
@@ -173,11 +177,13 @@ def main(page: ft.Page):
         )
 
     def meat():
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Meat", [])]
         return ft.View(
             "/five",
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -195,11 +201,13 @@ def main(page: ft.Page):
         )
     
     def drinks():
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Drinks", [])]
         return ft.View(
             "/six",
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -217,11 +225,13 @@ def main(page: ft.Page):
         )
     
     def snacks():
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Snacks", [])]
         return ft.View(
             "/seven",
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -239,11 +249,13 @@ def main(page: ft.Page):
         )
     
     def bakery():
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Bakery", [])]
         return ft.View(
             "/eight",
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -261,11 +273,13 @@ def main(page: ft.Page):
         )
     
     def dairy():
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Dairy", [])]
         return ft.View(
             "/nine",
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -283,11 +297,13 @@ def main(page: ft.Page):
         )
 
     def Grains_Pasta():
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Grains & Pasta", [])]
         return ft.View(
             "/ten",
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -305,11 +321,13 @@ def main(page: ft.Page):
         )
     
     def Bath_Stuff():
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Bath Stuff", [])]
         return ft.View(
             "/eleven",
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -327,11 +345,13 @@ def main(page: ft.Page):
         )
     
     def Breakfast():
+        product_controls = [ft.Text(product["name"]) for product in products_data.get("Breakfast", [])]
         return ft.View(
             "/twelve",
             controls=[
                 image,
                 ft.Text("Pick an Pay Online Store", size=30),
+                ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
