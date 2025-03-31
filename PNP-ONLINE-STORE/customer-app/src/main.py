@@ -33,14 +33,14 @@ def main(page: ft.Page):
 
     #open inventory file
     try:
-        products_data = {}
+        products_data = []
         with open("inventory.json", "r") as file:
             products_data = json.load(file)
         print("Products loaded successfully!")
     except FileNotFoundError:
-        print("Error: The file 'products.json' was not found.")
+        print("Error: The file 'inventory.json' was not found.")
     except json.JSONDecodeError:
-        print("Error: The file 'products.json' contains invalid JSON.")
+        print("Error: The file 'inventory.json' contains invalid JSON.")
 
     def toggle_theme(e):                    
         page.theme_mode = ft.ThemeMode.LIGHT if page.theme_mode == ft.ThemeMode.DARK else ft.ThemeMode.DARK
