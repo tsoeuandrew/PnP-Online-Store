@@ -1,34 +1,28 @@
 {
     "Fruits": [
-        {"name": "banana", "ïmage":"fruits/banana.png", "quantity": 25, "price": 18.50},
-        {"name": "mango", "ïmage":"fruits/mango.png", "quantity": 25, "price": 18.50},
-        {"name": "orange", "ïmage":"fruits/orange.png", "quantity": 25, "price": 18.50},
-        {"name": "pear", "ïmage":"fruits/pear.png", "quantity": 25, "price": 18.50},
-        {"name": "pineapple", "ïmage":"fruits/pineapple.png", "quantity": 25, "price": 18.50},
-        {"name": "plums", "ïmage":"fruits/plums.png", "quantity": 25, "price": 18.50},
-        {"name": "red apple", "ïmage":"fruits/red-apple.png", "quantity": 25, "price": 18.50},
-        {"name": "soft citrus", "ïmage":"fruits/soft-citrus.png", "quantity": 25, "price": 18.50}
-
+        {"name": "banana", "image": "fruits/banana.png", "quantity": 25, "price": 18.50},
+        {"name": "mango", "image": "fruits/mango.png", "quantity": 25, "price": 18.50},
+        {"name": "orange", "image": "fruits/orange.png", "quantity": 25, "price": 18.50},
+        {"name": "pear", "image": "fruits/pear.png", "quantity": 25, "price": 18.50},
+        {"name": "pineapple", "image": "fruits/pineapple.png", "quantity": 25, "price": 18.50},
+        {"name": "plums", "image": "fruits/plums.png", "quantity": 25, "price": 18.50},
+        {"name": "red apple", "image": "fruits/red-apple.png", "quantity": 25, "price": 18.50},
+        {"name": "soft citrus", "image": "fruits/soft-citrus.png", "quantity": 25, "price": 18.50}
     ],
     "Vegetables": [
-        {"name": "beetroot-3kg", "ïmage":"vegetables/beetroot-3kg.png", "quantity": 25, "price": 18.50},
-        {"name": "cabbage", "ïmage":"vegetables/cabbage.png", "quantity": 25, "price": 18.50},
-        {"name": "carrots", "ïmage":"vegetables/carrots.png", "quantity": 25, "price": 18.50},
-        {"name": "potato", "ïmage":"vegetables/potato.png", "quantity": 25, "price": 18.50},
-        {"name": "pumpkim", "ïmage":"vegetables/pumpkin.png", "quantity": 25, "price": 18.50},
-        {"name": "red-cabbage", "ïmage":"vegetables/red-cabbage.png", "quantity": 25, "price": 18.50},
-        {"name": "red-onion", "ïmage":"vegetables/red-onion.png", "quantity": 25, "price": 18.50},
-        {"name": "spinach", "ïmage":"vegetables/spinach.png", "quantity": 25, "price": 18.50}
-
+        {"name": "beetroot-3kg", "image": "vegetables/beetroot-3kg.png", "quantity": 25, "price": 18.50},
+        {"name": "cabbage", "image": "vegetables/cabbage.png", "quantity": 25, "price": 18.50},
+        {"name": "carrots", "image": "vegetables/carrots.png", "quantity": 25, "price": 18.50},
+        {"name": "potato", "image": "vegetables/potato.png", "quantity": 25, "price": 18.50},
+        {"name": "pumpkin", "image": "vegetables/pumpkin.png", "quantity": 25, "price": 18.50},
+        {"name": "red-cabbage", "image": "vegetables/red-cabbage.png", "quantity": 25, "price": 18.50},
+        {"name": "red-onion", "image": "vegetables/red-onion.png", "quantity": 25, "price": 18.50},
+        {"name": "spinach", "image": "vegetables/spinach.png", "quantity": 25, "price": 18.50}
     ],
     "Meat": [
-        {"name": "baby hake", "ïmage":"meat/baby-hake.png", "quantity": 25, "price": 18.50},
-        {"name": "chicken-5kg", "ïmage":"meat/chicken-5kg.png", "quantity": 25, "price": 18.50},
-        {"name": "chicken-necks-5kg", "ïmage":"meat/chicken-necks-5kg.png", "quantity": 25, "price": 18.50},
-        {"name": "chicken-5kg", "ïmage":"meat/chicken-5kg.png", "quantity": 25, "price": 18.50},
-
-
-
+        {"name": "baby hake", "image": "meat/baby-hake.png", "quantity": 25, "price": 18.50},
+        {"name": "chicken-5kg", "image": "meat/chicken-5kg.png", "quantity": 25, "price": 18.50},
+        {"name": "chicken-necks-5kg", "image": "meat/chicken-necks-5kg.png", "quantity": 25, "price": 18.50},
         {"name": "chicken", "quantity": 15, "price": 5.00},
         {"name": "beef", "quantity": 10, "price": 6.50},
         {"name": "pork", "quantity": 8, "price": 5.75},
@@ -62,14 +56,12 @@
         {"name": "trail mix", "quantity": 10, "price": 3.20}
     ],
     "Drinks": [
-        {"name": "cocacola", "ïmage":"drinks/cocacola-2L.png", "quantity": 25, "price": 18.50},
-        {"name": "fanta", "ïmage":"drinks/fanta-2L.png", "quantity": 25, "price": 18.50},
-        {"name": "pepsi", "ïmage":"drinks/pepsi-2L.png", "quantity": 25, "price": 18.50},
-        {"name": "sprite", "ïmage":"drinks/sprite-2L.png", "quantity": 25, "price": 18.50},
-        {"name": "pepsi", "ïmage":"drinks/pepsi-2L.png", "quantity": 25, "price": 18.50},
-        {"name": "stoney", "ïmage":"drinks/stoney-2L.png", "quantity": 25, "price": 18.50},
-        {"name": "twist", "ïmage":"drinks/twist-2L.png", "quantity": 25, "price": 18.50}
-       
+        {"name": "cocacola", "image": "drinks/cocacola-2L.png", "quantity": 25, "price": 18.50},
+        {"name": "fanta", "image": "drinks/fanta-2L.png", "quantity": 25, "price": 18.50},
+        {"name": "pepsi", "image": "drinks/pepsi-2L.png", "quantity": 25, "price": 18.50},
+        {"name": "sprite", "image": "drinks/sprite-2L.png", "quantity": 25, "price": 18.50},
+        {"name": "stoney", "image": "drinks/stoney-2L.png", "quantity": 25, "price": 18.50},
+        {"name": "twist", "image": "drinks/twist-2L.png", "quantity": 25, "price": 18.50}
     ],
     "Dairy": [
         {"name": "milk", "quantity": 20, "price": 1.80},
@@ -82,19 +74,18 @@
         {"name": "cream cheese", "quantity": 6, "price": 3.50}
     ],
     "Bakery": [
-        {"name": "bread-white", "ïmage":"bakery/bread-white.png", "quantity": 25, "price": 18.50},
-        {"name": "bread-brown", "ïmage":"bakery/bread-brown.png", "quantity": 25, "price": 18.50},
-        {"name": "bread-white", "ïmage":"bakery/bread-white.png", "quantity": 25, "price": 18.50},
-        {"name": "sasko-white", "ïmage":"bakery/sasko-white.png", "quantity": 25, "price": 18.50},
-        {"name": "sasko-brown", "ïmage":"bakery/sasko-brown.png", "quantity": 25, "price": 18.50},
-        {"name": "sunbake-brown", "ïmage":"bakery/sunbake-brown.png", "quantity": 25, "price": 18.50},
-        {"name": "brue ribbon", "ïmage":"bakery/blueribbon.png", "quantity": 25, "price": 18.50},
-        {"name": "buns-10", "ïmage":"bakery/buns-10.png", "quantity": 25, "price": 18.50},
-        {"name": "cupcakes", "ïmage":"bakery/cupcakes.png", "quantity": 25, "price": 18.50},
-        {"name": "rainbow cake", "ïmage":"bakery/rainbow-cake.png", "quantity": 25, "price": 18.50},
-        {"name": "dessert-buns6", "ïmage":"bakery/dessert-buns6.png", "quantity": 25, "price": 18.50},
-        {"name": "vanilla-cake", "ïmage":"bakery/vanilla-cake.png", "quantity": 25, "price": 18.50},
-        {"name": "chocolate-cake", "ïmage":"bakery/chocolate-cake.png", "quantity": 25, "price": 18.50}
+        {"name": "bread-white", "image": "bakery/bread-white.png", "quantity": 25, "price": 18.50},
+        {"name": "bread-brown", "image": "bakery/bread-brown.png", "quantity": 25, "price": 18.50},
+        {"name": "sasko-white", "image": "bakery/sasko-white.png", "quantity": 25, "price": 18.50},
+        {"name": "sasko-brown", "image": "bakery/sasko-brown.png", "quantity": 25, "price": 18.50},
+        {"name": "sunbake-brown", "image": "bakery/sunbake-brown.png", "quantity": 25, "price": 18.50},
+        {"name": "blue ribbon", "image": "bakery/blueribbon.png", "quantity": 25, "price": 18.50},
+        {"name": "buns-10", "image": "bakery/buns-10.png", "quantity": 25, "price": 18.50},
+        {"name": "cupcakes", "image": "bakery/cupcakes.png", "quantity": 25, "price": 18.50},
+        {"name": "rainbow cake", "image": "bakery/rainbow-cake.png", "quantity": 25, "price": 18.50},
+        {"name": "dessert-buns6", "image": "bakery/dessert-buns6.png", "quantity": 25, "price": 18.50},
+        {"name": "vanilla-cake", "image": "bakery/vanilla-cake.png", "quantity": 25, "price": 18.50},
+        {"name": "chocolate-cake", "image": "bakery/chocolate-cake.png", "quantity": 25, "price": 18.50}
     ],
     "Grains & Pasta": [
         {"name": "noodles", "quantity": 35, "price": 2.50},
@@ -121,17 +112,18 @@
     "Breakfast": [
         {"name": "cereal", "quantity": 20, "price": 2.20},
         {"name": "granola", "quantity": 15, "price": 2.50},
+        {"name": "muesli", "quantity": 18, "price": 2.40},
         {"name": "pancake mix", "quantity": 10, "price": 3.00},
-        {"name": "oats", "quantity": 18, "price": 1.80},
-        {"name": "bread", "quantity": 30, "price": 1.50},
-        {"name": "jam", "quantity": 20, "price": 2.00},
-        {"name": "butter", "quantity": 15, "price": 2.75},
-        {"name": "eggs", "quantity": 12, "price": 3.50},
-        {"name": "bacon", "quantity": 10, "price": 4.00},
-        {"name": "yogurt", "quantity": 18, "price": 2.20},
-        {"name": "fruit salad", "quantity": 8, "price": 3.00},
-        {"name": "weet-bix", "quantity": 10, "price": 2.50},
-        {"name": "cornflakes", "quantity": 12, "price": 2.00},
-        {"name": "instant porridge", "quantity": 8, "price": 2.50}
+        {"name": "toast", "quantity": 30, "price": 1.75}
+    ],
+    "Household": [
+        {"name": "toilet paper", "quantity": 50, "price": 1.80},
+        {"name": "tissue paper", "quantity": 25, "price": 1.50},
+        {"name": "laundry powder", "quantity": 15, "price": 3.00},
+        {"name": "cleaning wipes", "quantity": 20, "price": 2.20},
+        {"name": "dishwashing liquid", "quantity": 25, "price": 2.50},
+        {"name": "garbage bags", "quantity": 30, "price": 1.60},
+        {"name": "scrub brushes", "quantity": 12, "price": 2.80},
+        {"name": "sponges", "quantity": 40, "price": 1.40}
     ]
 }
