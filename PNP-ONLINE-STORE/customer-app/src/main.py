@@ -33,6 +33,7 @@ def main(page: ft.Page):
 
     #open inventory file
     try:
+        products_data = {}
         with open("inventory.json", "r") as file:
             products_data = json.load(file)
         print("Products loaded successfully!")
