@@ -34,7 +34,7 @@ def main(page: ft.Page):
     #open products file
     try:
         with open("products.json", "r") as file:
-        products_data = json.load(file)
+            products_data = json.load(file)
         print("Products loaded successfully!")
     except FileNotFoundError:
         print("Error: The file 'products.json' was not found.")
