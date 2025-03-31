@@ -9,8 +9,6 @@ def main(page: ft.Page):
     page.window_resizable = True
     page.theme_mode = ft.ThemeMode.DARK
 
-    image = ft.Image(src="cover.jpg", width=150, height=150)
-
     # Feedback for different fields
     username_feedback = ft.Text(color="red", weight="bold")
     id_feedback = ft.Text(color="red", weight="bold")
@@ -94,7 +92,6 @@ def main(page: ft.Page):
         return ft.View(
             "/",
             controls=[
-                image,
                 ft.Text("Pick an Pay Online Store", size=50),
                 username,
                 password,
@@ -108,8 +105,7 @@ def main(page: ft.Page):
         return ft.View(
             "/two",
             controls=[
-                image,
-                ft.Text("Pick an Pay Online Store", size=30),
+                ft.Text("Welcome To Pick An Pay Online Store", size=50),
                 ft.Switch(label="Theme", on_change=toggle_theme),
                 input_box,
                 ft.ElevatedButton("Send", on_click=send_name),
@@ -135,8 +131,7 @@ def main(page: ft.Page):
         return ft.View(
             "/third",
             controls=[
-                image,
-                ft.Text("Pick an Pay Online Store", size=30),
+                ft.Text("Welcome To Pick An Pay Online Store", size=50),
                 ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -159,8 +154,7 @@ def main(page: ft.Page):
         return ft.View(
             "/four",
             controls=[
-                image,
-                ft.Text("Pick an Pay Online Store", size=30),
+                ft.Text("Welcome To Pick An Pay Online Store", size=50),
                 ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
@@ -183,8 +177,7 @@ def main(page: ft.Page):
         return ft.View(
             "/five",
             controls=[
-                image,
-                ft.Text("Pick an Pay Online Store", size=30),
+                ft.Text("Welcome To Pick An Pay Online Store", size=50),
                 ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
@@ -202,13 +195,14 @@ def main(page: ft.Page):
             ],
         )
     
-    def drinks():
+    def drinks():       #pictures of drinks
+        
+        cocacola = ft.Image(src="drinks/cocacola-2L.png", width=150, height=150)
         product_controls = [ft.Text(product["name"]) for product in products_data.get("Drinks", {})]
         return ft.View(
             "/six",
             controls=[
-                image,
-                ft.Text("Pick an Pay Online Store", size=30),
+                ft.Text("Welcome To Pick An Pay Online Store", size=50),
                 ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
@@ -231,8 +225,7 @@ def main(page: ft.Page):
         return ft.View(
             "/seven",
             controls=[
-                image,
-                ft.Text("Pick an Pay Online Store", size=30),
+                ft.Text("Welcome To Pick An Pay Online Store", size=50),
                 ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
@@ -255,8 +248,7 @@ def main(page: ft.Page):
         return ft.View(
             "/eight",
             controls=[
-                image,
-                ft.Text("Pick an Pay Online Store", size=30),
+                ft.Text("Welcome To Pick An Pay Online Store", size=50),
                 ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
@@ -279,8 +271,7 @@ def main(page: ft.Page):
         return ft.View(
             "/nine",
             controls=[
-                image,
-                ft.Text("Pick an Pay Online Store", size=30),
+                ft.Text("Welcome To Pick An Pay Online Store", size=50),
                 ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
@@ -303,8 +294,7 @@ def main(page: ft.Page):
         return ft.View(
             "/ten",
             controls=[
-                image,
-                ft.Text("Pick an Pay Online Store", size=30),
+                ft.Text("Welcome To Pick An Pay Online Store", size=50),
                 ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
@@ -327,8 +317,7 @@ def main(page: ft.Page):
         return ft.View(
             "/eleven",
             controls=[
-                image,
-                ft.Text("Pick an Pay Online Store", size=30),
+                ft.Text("Welcome To Pick An Pay Online Store", size=50),
                 ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
@@ -351,8 +340,7 @@ def main(page: ft.Page):
         return ft.View(
             "/twelve",
             controls=[
-                image,
-                ft.Text("Pick an Pay Online Store", size=30),
+                ft.Text("Welcome To Pick An Pay Online Store", size=50),
                 ft.Column(product_controls),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
@@ -374,8 +362,7 @@ def main(page: ft.Page):
         return ft.View(
         "/thirteen",
         controls=[
-            image,
-            ft.Text("Pick an Pay Online Store", size=30),
+            ft.Text("Welcome To Pick An Pay Online Store", size=50),
             username, username_feedback,
             password,
             id_number, id_feedback,
