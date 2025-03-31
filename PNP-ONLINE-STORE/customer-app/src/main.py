@@ -204,6 +204,7 @@ def main(page: ft.Page):
             controls=[
                 ft.Text("Welcome To Pick An Pay Online Store", size=50),
                 ft.Column(product_controls),
+                cocacola,
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
