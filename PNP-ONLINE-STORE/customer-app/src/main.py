@@ -370,19 +370,19 @@ def main(page: ft.Page):
     
     def save_user():
         return ft.View(
-            "/thirteen",
-            controls=[
-                image,
-                ft.Text("Pick an Pay Online Store", size=30),
-                username,
-                password,
-                id_number,
-                mobile,
-                ft.ElevatedButton("Login", on_click=save_data),
-                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
-                feedback
-            ],
-        )
+        "/thirteen",
+        controls=[
+            image,
+            ft.Text("Pick an Pay Online Store", size=30),
+            username, username_feedback,
+            password,
+            id_number, id_feedback,
+            mobile,
+            ft.ElevatedButton("save", on_click=save_data),
+            ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+            feedback
+        ],
+    )
 
     def route_change(route):
         page.views.clear()
