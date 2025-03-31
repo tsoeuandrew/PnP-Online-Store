@@ -246,11 +246,14 @@ def main(page: ft.Page):
     
     def bakery():
         product_controls = [ft.Text(product["name"]) for product in products_data.get("Bakery", {})]
+        image_controls = [ft.Text(product["image"]) for product in products_data.get("Bakery", {})]
+        price_controls = [ft.Text(product["price"]) for product in products_data.get("Bakery", {})]
         return ft.View(
             "/eight",
             controls=[
                 ft.Text("Welcome To Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
+                ft.Column(
+                    image_controls,product_controls,price_controls),            #view image and price under samething
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
