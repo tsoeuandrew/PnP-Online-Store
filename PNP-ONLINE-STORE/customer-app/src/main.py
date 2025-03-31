@@ -245,9 +245,9 @@ def main(page: ft.Page):
         )
     
     def bakery():
+        price_controls = [ft.Text(f"Price: R{product['price']:.2f}") for product in products_data.get("Bakery", [])]
         product_controls = [ft.Text(product["name"]) for product in products_data.get("Bakery", {})]
         image_controls = [ft.Text(product["image"]) for product in products_data.get("Bakery", {})]
-        price_controls = [ft.Text(product["price"]) for product in products_data.get("Bakery", {})]
         return ft.View(
             "/eight",
             controls=[
