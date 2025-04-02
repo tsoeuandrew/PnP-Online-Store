@@ -129,12 +129,37 @@ def main(page: ft.Page):
         )
     
     def fruits():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Fruits", {})]
+        price_controls = [ft.Text(f"Price: R{product['price']:.2f}") for product in products_data.get("Fruits", [])]
+        name_controls = [ft.Text(product["name"], weight="bold") for product in products_data.get("Fruits", [])]
+        image_controls = [
+            ft.Image(   # Get image source from the product, or use a default if not available
+                src=product.get("image", product.get("ïmage", "fruits/default.png")),  # Default path if no image
+                width=150, height=150,  # Image dimensions
+                fit=ft.ImageFit.CONTAIN,  # Ensure the image fits within the defined size
+                error_content=ft.Text("No image")  # Text to display if the image can't be loaded
+            ) for product in products_data.get("Fruits", [])  # Loop over all products in the "Bakery" category
+        ]
+
+        # Group the products into rows, with each row containing 8 items (image, name, and price)
+        product_columns = []
+        for i in range(0, len(image_controls), 8):  # Loop over the image controls in chunks of 8
+            row = ft.Row(
+                controls=[  # Create a column for each product
+                    ft.Column(
+                        controls=[image_controls[i], name_controls[i], price_controls[i]],  # Each product has its image, name, and price
+                        alignment=ft.MainAxisAlignment.CENTER  # Center the content within each column
+                    )
+                    for i in range(i, min(i + 8, len(image_controls)))  # Handle a partial row if the last chunk is less than 8 items
+                ],
+                alignment=ft.MainAxisAlignment.CENTER  # Center the entire row horizontally
+            )
+            product_columns.append(row)  # Add the row to the list of rows
+
         return ft.View(
             "/third",
             controls=[
                 ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
+                ft.Column(product_columns),
                 ft.Row([
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
                     ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
@@ -153,12 +178,37 @@ def main(page: ft.Page):
         )
     
     def Vegetables():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Vegetables", {})]
+        price_controls = [ft.Text(f"Price: R{product['price']:.2f}") for product in products_data.get("Vegetables", [])]
+        name_controls = [ft.Text(product["name"], weight="bold") for product in products_data.get("Vegetables", [])]
+        image_controls = [
+            ft.Image(   # Get image source from the product, or use a default if not available
+                src=product.get("image", product.get("ïmage", "vegetables/default.png")),  # Default path if no image
+                width=150, height=150,  # Image dimensions
+                fit=ft.ImageFit.CONTAIN,  # Ensure the image fits within the defined size
+                error_content=ft.Text("No image")  # Text to display if the image can't be loaded
+            ) for product in products_data.get("Vegetables", [])  # Loop over all products in the "Bakery" category
+        ]
+
+        # Group the products into rows, with each row containing 8 items (image, name, and price)
+        product_columns = []
+        for i in range(0, len(image_controls), 8):  # Loop over the image controls in chunks of 8
+            row = ft.Row(
+                controls=[  # Create a column for each product
+                    ft.Column(
+                        controls=[image_controls[i], name_controls[i], price_controls[i]],  # Each product has its image, name, and price
+                        alignment=ft.MainAxisAlignment.CENTER  # Center the content within each column
+                    )
+                    for i in range(i, min(i + 8, len(image_controls)))  # Handle a partial row if the last chunk is less than 8 items
+                ],
+                alignment=ft.MainAxisAlignment.CENTER  # Center the entire row horizontally
+            )
+            product_columns.append(row)  # Add the row to the list of rows
+
         return ft.View(
             "/four",
             controls=[
                 ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
+                ft.Column(product_columns),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
@@ -177,12 +227,37 @@ def main(page: ft.Page):
         )
 
     def meat():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Meat", {})]
+        price_controls = [ft.Text(f"Price: R{product['price']:.2f}") for product in products_data.get("Meat", [])]
+        name_controls = [ft.Text(product["name"], weight="bold") for product in products_data.get("Meat", [])]
+        image_controls = [
+            ft.Image(   # Get image source from the product, or use a default if not available
+                src=product.get("image", product.get("ïmage", "meat/default.png")),  # Default path if no image
+                width=150, height=150,  # Image dimensions
+                fit=ft.ImageFit.CONTAIN,  # Ensure the image fits within the defined size
+                error_content=ft.Text("No image")  # Text to display if the image can't be loaded
+            ) for product in products_data.get("Meat", [])  # Loop over all products in the "Bakery" category
+        ]
+
+        # Group the products into rows, with each row containing 8 items (image, name, and price)
+        product_columns = []
+        for i in range(0, len(image_controls), 8):  # Loop over the image controls in chunks of 8
+            row = ft.Row(
+                controls=[  # Create a column for each product
+                    ft.Column(
+                        controls=[image_controls[i], name_controls[i], price_controls[i]],  # Each product has its image, name, and price
+                        alignment=ft.MainAxisAlignment.CENTER  # Center the content within each column
+                    )
+                    for i in range(i, min(i + 8, len(image_controls)))  # Handle a partial row if the last chunk is less than 8 items
+                ],
+                alignment=ft.MainAxisAlignment.CENTER  # Center the entire row horizontally
+            )
+            product_columns.append(row)  # Add the row to the list of rows
+
         return ft.View(
             "/five",
             controls=[
                 ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
+                ft.Column(product_columns),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -201,15 +276,37 @@ def main(page: ft.Page):
         )
     
     def drinks():       #pictures of drinks
-    
-        cocacola = ft.Image(src="drinks/cocacola-2L.png", width=150, height=150)
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Drinks", {})]
+        price_controls = [ft.Text(f"Price: R{product['price']:.2f}") for product in products_data.get("Drinks", [])]
+        name_controls = [ft.Text(product["name"], weight="bold") for product in products_data.get("Drinks", [])]
+        image_controls = [
+            ft.Image(   # Get image source from the product, or use a default if not available
+                src=product.get("image", product.get("ïmage", "drinks/default.png")),  # Default path if no image
+                width=150, height=150,  # Image dimensions
+                fit=ft.ImageFit.CONTAIN,  # Ensure the image fits within the defined size
+                error_content=ft.Text("No image")  # Text to display if the image can't be loaded
+            ) for product in products_data.get("Drinks", [])  # Loop over all products in the "Bakery" category
+        ]
+
+        # Group the products into rows, with each row containing 8 items (image, name, and price)
+        product_columns = []
+        for i in range(0, len(image_controls), 8):  # Loop over the image controls in chunks of 8
+            row = ft.Row(
+                controls=[  # Create a column for each product
+                    ft.Column(
+                        controls=[image_controls[i], name_controls[i], price_controls[i]],  # Each product has its image, name, and price
+                        alignment=ft.MainAxisAlignment.CENTER  # Center the content within each column
+                    )
+                    for i in range(i, min(i + 8, len(image_controls)))  # Handle a partial row if the last chunk is less than 8 items
+                ],
+                alignment=ft.MainAxisAlignment.CENTER  # Center the entire row horizontally
+            )
+            product_columns.append(row)  # Add the row to the list of rows
+        
         return ft.View(
             "/six",
             controls=[
                 ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
-                cocacola,
+                ft.Column(product_columns),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -228,12 +325,37 @@ def main(page: ft.Page):
         )
     
     def snacks():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Snacks", {})]
+        price_controls = [ft.Text(f"Price: R{product['price']:.2f}") for product in products_data.get("Snacks", [])]
+        name_controls = [ft.Text(product["name"], weight="bold") for product in products_data.get("Snacks", [])]
+        image_controls = [
+            ft.Image(   # Get image source from the product, or use a default if not available
+                src=product.get("image", product.get("ïmage", "snacks/default.png")),  # Default path if no image
+                width=150, height=150,  # Image dimensions
+                fit=ft.ImageFit.CONTAIN,  # Ensure the image fits within the defined size
+                error_content=ft.Text("No image")  # Text to display if the image can't be loaded
+            ) for product in products_data.get("Snacks", [])  # Loop over all products in the "Bakery" category
+        ]
+
+        # Group the products into rows, with each row containing 8 items (image, name, and price)
+        product_columns = []
+        for i in range(0, len(image_controls), 8):  # Loop over the image controls in chunks of 8
+            row = ft.Row(
+                controls=[  # Create a column for each product
+                    ft.Column(
+                        controls=[image_controls[i], name_controls[i], price_controls[i]],  # Each product has its image, name, and price
+                        alignment=ft.MainAxisAlignment.CENTER  # Center the content within each column
+                    )
+                    for i in range(i, min(i + 8, len(image_controls)))  # Handle a partial row if the last chunk is less than 8 items
+                ],
+                alignment=ft.MainAxisAlignment.CENTER  # Center the entire row horizontally
+            )
+            product_columns.append(row)  # Add the row to the list of rows
+
         return ft.View(
             "/seven",
             controls=[
                 ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
+                ft.Column(product_columns),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -302,12 +424,37 @@ def main(page: ft.Page):
         )
     
     def dairy():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Dairy", {})]
+        price_controls = [ft.Text(f"Price: R{product['price']:.2f}") for product in products_data.get("Dairy", [])]
+        name_controls = [ft.Text(product["name"], weight="bold") for product in products_data.get("Dairy", [])]
+        image_controls = [
+            ft.Image(   # Get image source from the product, or use a default if not available
+                src=product.get("image", product.get("ïmage", "dairy/default.png")),  # Default path if no image
+                width=150, height=150,  # Image dimensions
+                fit=ft.ImageFit.CONTAIN,  # Ensure the image fits within the defined size
+                error_content=ft.Text("No image")  # Text to display if the image can't be loaded
+            ) for product in products_data.get("Dairy", [])  # Loop over all products in the "Bakery" category
+        ]
+
+        # Group the products into rows, with each row containing 8 items (image, name, and price)
+        product_columns = []
+        for i in range(0, len(image_controls), 8):  # Loop over the image controls in chunks of 8
+            row = ft.Row(
+                controls=[  # Create a column for each product
+                    ft.Column(
+                        controls=[image_controls[i], name_controls[i], price_controls[i]],  # Each product has its image, name, and price
+                        alignment=ft.MainAxisAlignment.CENTER  # Center the content within each column
+                    )
+                    for i in range(i, min(i + 8, len(image_controls)))  # Handle a partial row if the last chunk is less than 8 items
+                ],
+                alignment=ft.MainAxisAlignment.CENTER  # Center the entire row horizontally
+            )
+            product_columns.append(row)  # Add the row to the list of rows
+
         return ft.View(
             "/nine",
             controls=[
                 ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
+                ft.Column(product_columns),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -326,12 +473,37 @@ def main(page: ft.Page):
         )
 
     def Grains_Pasta():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Grains & Pasta", {})]
+        price_controls = [ft.Text(f"Price: R{product['price']:.2f}") for product in products_data.get("Grains & Pasta", [])]
+        name_controls = [ft.Text(product["name"], weight="bold") for product in products_data.get("Grains & Pasta", [])]
+        image_controls = [
+            ft.Image(   # Get image source from the product, or use a default if not available
+                src=product.get("image", product.get("ïmage", "grains_pasta/default.png")),  # Default path if no image
+                width=150, height=150,  # Image dimensions
+                fit=ft.ImageFit.CONTAIN,  # Ensure the image fits within the defined size
+                error_content=ft.Text("No image")  # Text to display if the image can't be loaded
+            ) for product in products_data.get("Grains & Pasta", [])  # Loop over all products in the "Bakery" category
+        ]
+
+        # Group the products into rows, with each row containing 8 items (image, name, and price)
+        product_columns = []
+        for i in range(0, len(image_controls), 8):  # Loop over the image controls in chunks of 8
+            row = ft.Row(
+                controls=[  # Create a column for each product
+                    ft.Column(
+                        controls=[image_controls[i], name_controls[i], price_controls[i]],  # Each product has its image, name, and price
+                        alignment=ft.MainAxisAlignment.CENTER  # Center the content within each column
+                    )
+                    for i in range(i, min(i + 8, len(image_controls)))  # Handle a partial row if the last chunk is less than 8 items
+                ],
+                alignment=ft.MainAxisAlignment.CENTER  # Center the entire row horizontally
+            )
+            product_columns.append(row)  # Add the row to the list of rows
+
         return ft.View(
             "/ten",
             controls=[
                 ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
+                ft.Column(product_columns),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -350,12 +522,37 @@ def main(page: ft.Page):
         )
     
     def Bath_Stuff():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Bath Stuff", [])]
+        price_controls = [ft.Text(f"Price: R{product['price']:.2f}") for product in products_data.get("Bath Stuff", [])]
+        name_controls = [ft.Text(product["name"], weight="bold") for product in products_data.get("Bath Stuff", [])]
+        image_controls = [
+            ft.Image(   # Get image source from the product, or use a default if not available
+                src=product.get("image", product.get("ïmage", "bath_stuff/default.png")),  # Default path if no image
+                width=150, height=150,  # Image dimensions
+                fit=ft.ImageFit.CONTAIN,  # Ensure the image fits within the defined size
+                error_content=ft.Text("No image")  # Text to display if the image can't be loaded
+            ) for product in products_data.get("Bath Stuff", [])  # Loop over all products in the "Bakery" category
+        ]
+
+        # Group the products into rows, with each row containing 8 items (image, name, and price)
+        product_columns = []
+        for i in range(0, len(image_controls), 8):  # Loop over the image controls in chunks of 8
+            row = ft.Row(
+                controls=[  # Create a column for each product
+                    ft.Column(
+                        controls=[image_controls[i], name_controls[i], price_controls[i]],  # Each product has its image, name, and price
+                        alignment=ft.MainAxisAlignment.CENTER  # Center the content within each column
+                    )
+                    for i in range(i, min(i + 8, len(image_controls)))  # Handle a partial row if the last chunk is less than 8 items
+                ],
+                alignment=ft.MainAxisAlignment.CENTER  # Center the entire row horizontally
+            )
+            product_columns.append(row)  # Add the row to the list of rows
+
         return ft.View(
             "/eleven",
             controls=[
                 ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
+                ft.Column(product_columns),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -374,12 +571,37 @@ def main(page: ft.Page):
         )
     
     def Breakfast():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Breakfast", [])]
+        price_controls = [ft.Text(f"Price: R{product['price']:.2f}") for product in products_data.get("Breakfast", [])]
+        name_controls = [ft.Text(product["name"], weight="bold") for product in products_data.get("Breakfast", [])]
+        image_controls = [
+            ft.Image(   # Get image source from the product, or use a default if not available
+                src=product.get("image", product.get("ïmage", "Breakfast/default.png")),  # Default path if no image
+                width=150, height=150,  # Image dimensions
+                fit=ft.ImageFit.CONTAIN,  # Ensure the image fits within the defined size
+                error_content=ft.Text("No image")  # Text to display if the image can't be loaded
+            ) for product in products_data.get("Breakfast", [])  # Loop over all products in the "Bakery" category
+        ]
+
+        # Group the products into rows, with each row containing 8 items (image, name, and price)
+        product_columns = []
+        for i in range(0, len(image_controls), 8):  # Loop over the image controls in chunks of 8
+            row = ft.Row(
+                controls=[  # Create a column for each product
+                    ft.Column(
+                        controls=[image_controls[i], name_controls[i], price_controls[i]],  # Each product has its image, name, and price
+                        alignment=ft.MainAxisAlignment.CENTER  # Center the content within each column
+                    )
+                    for i in range(i, min(i + 8, len(image_controls)))  # Handle a partial row if the last chunk is less than 8 items
+                ],
+                alignment=ft.MainAxisAlignment.CENTER  # Center the entire row horizontally
+            )
+            product_columns.append(row)  # Add the row to the list of rows
+
         return ft.View(
             "/twelve",
             controls=[
                 ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
+                ft.Column(product_columns),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
