@@ -29,6 +29,8 @@ def main(page: ft.Page):
     address = ft.TextField(label="Physical Address", height=100, multiline=True)
     output = ft.Text()
 
+    cart = {}
+
     #open inventory file
     try:
         products_data = {}
@@ -121,6 +123,7 @@ def main(page: ft.Page):
                     ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
                     ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
                     ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
+                    ft.ElevatedButton("Go to Cart", on_click=lambda e: page.go("/fourteen")),
                 ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
                 )
             ],
@@ -385,6 +388,21 @@ def main(page: ft.Page):
             ],
         )
     
+    def Cart_page():
+        return ft.View(
+            "/fourteen",
+            controls=[
+                ft.Text("Pick an Pay Online Store", size=50),
+                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
+            ],
+        )
+    
+    def add_to_cart(page, product):
+        product_name = product["name"]       #Retrieves the "name" key from the product dictionary
+        cart[product_name] = cart.get(product_name, 0) + 1  # Checks if product_name already exists in cart.     
+        page.add(ft.Text(f"Added {product_name} to cart!"))    #If it doesn’t exist, initializes it with a quantity of 1.
+        page.update()                                          #If it exists, increments the quantity by 1.
+    
     def save_user():
         return ft.View(
         "/thirteen",
@@ -428,6 +446,8 @@ def main(page: ft.Page):
             page.views.append(Breakfast())
         elif page.route == "/thirteen":
             page.views.append(save_user())
+        elif page.route == "/fourteen":
+            page.views.append(Cart_page())
         page.update()
 
     page.on_route_change = route_change
