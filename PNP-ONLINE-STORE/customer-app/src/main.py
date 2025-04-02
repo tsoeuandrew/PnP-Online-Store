@@ -113,137 +113,10 @@ def main(page: ft.Page):
                 ft.ElevatedButton("Send", on_click=send_name),
                 output,
                 ft.Row([
-                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
-                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
-                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
-                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
-                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
                     ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
-                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
-                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
-                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
                     ft.ElevatedButton("Go to Cart", on_click=lambda e: page.go("/fourteen")),
                 ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
                 )
-            ],
-        )
-    
-    def fruits():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Fruits", {})]
-        return ft.View(
-            "/third",
-            controls=[
-                ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
-                ft.Row([
-                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
-                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
-                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
-                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
-                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
-                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
-                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
-                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
-                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
-                ),           #end row
-                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
-            ],
-        )
-    
-    def Vegetables():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Vegetables", {})]
-        return ft.View(
-            "/four",
-            controls=[
-                ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
-                ft.Row([
-                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
-                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
-                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
-                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
-                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
-                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
-                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
-                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
-                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
-                ),
-                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
-            ],
-        )
-
-    def meat():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Meat", {})]
-        return ft.View(
-            "/five",
-            controls=[
-                ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
-                ft.Row([
-                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
-                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
-                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
-                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
-                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
-                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
-                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
-                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
-                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
-                ),
-                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
-            ],
-        )
-    
-    def drinks():       #pictures of drinks
-    
-        cocacola = ft.Image(src="drinks/cocacola-2L.png", width=150, height=150)
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Drinks", {})]
-        return ft.View(
-            "/six",
-            controls=[
-                ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
-                cocacola,
-                ft.Row([
-                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
-                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
-                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
-                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
-                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
-                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
-                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
-                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
-                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
-                ),
-                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
-            ],
-        )
-    
-    def snacks():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Snacks", {})]
-        return ft.View(
-            "/seven",
-            controls=[
-                ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
-                ft.Row([
-                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
-                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
-                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
-                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
-                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
-                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
-                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
-                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
-                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
-                ),
-                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
             ],
         )
     
@@ -281,107 +154,7 @@ def main(page: ft.Page):
                 ft.Column(
                     controls=product_columns),         #view image and price under same thing
                 ft.Row([
-                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
-                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
-                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
-                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
-                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
-                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
-                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
-                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
-                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
-                ),
-                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
-            ],
-        )
-    
-    def dairy():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Dairy", {})]
-        return ft.View(
-            "/nine",
-            controls=[
-                ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
-                ft.Row([
-                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
-                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
-                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
-                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
-                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
-                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
-                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
-                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
-                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
-                ),
-                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
-            ],
-        )
-
-    def Grains_Pasta():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Grains & Pasta", {})]
-        return ft.View(
-            "/ten",
-            controls=[
-                ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
-                ft.Row([
-                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
-                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
-                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
-                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
-                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
-                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
-                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
-                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
-                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
-                ),
-                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
-            ],
-        )
-    
-    def Bath_Stuff():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Bath Stuff", [])]
-        return ft.View(
-            "/eleven",
-            controls=[
-                ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
-                ft.Row([
-                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
-                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
-                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
-                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
-                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
-                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
-                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
-                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
-                ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
-                ),
-                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
-            ],
-        )
-    
-    def Breakfast():
-        product_controls = [ft.Text(product["name"]) for product in products_data.get("Breakfast", [])]
-        return ft.View(
-            "/twelve",
-            controls=[
-                ft.Text("Pick An Pay Online Store", size=50),
-                ft.Column(product_controls),
-                ft.Row([
-                    ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
-                    ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
-                    ft.ElevatedButton("Meat", on_click=lambda e: page.go("/five")),
-                    ft.ElevatedButton("Drinks", on_click=lambda e: page.go("/six")),
-                    ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
-                    ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
-                    ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
-                    ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Go to Cart", on_click=lambda e: page.go("/fourteen")),
                 ],scroll=ft.ScrollMode.AUTO,alignment=ft.MainAxisAlignment.CENTER,spacing=10
                 ),
                 ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
@@ -424,26 +197,8 @@ def main(page: ft.Page):
             page.views.append(login_page())
         elif page.route == "/two":
             page.views.append(home_page())
-        elif page.route == "/third":
-            page.views.append(fruits())
-        elif page.route == "/four":
-            page.views.append(Vegetables())
-        elif page.route == "/five":
-            page.views.append(meat())
-        elif page.route == "/six":
-            page.views.append(drinks())
-        elif page.route == "/seven":
-            page.views.append(snacks())
         elif page.route == "/eight":
             page.views.append(bakery())
-        elif page.route == "/nine":
-            page.views.append(dairy())
-        elif page.route == "/ten":
-            page.views.append(Grains_Pasta())
-        elif page.route == "/eleven":
-            page.views.append(Bath_Stuff())
-        elif page.route == "/twelve":
-            page.views.append(Breakfast())
         elif page.route == "/thirteen":
             page.views.append(save_user())
         elif page.route == "/fourteen":
