@@ -332,7 +332,7 @@ def main(page: ft.Page):
         )
 
     def Grains_Pasta():
-        products = fetch_products("grains and pasta")
+        products = fetch_products("grains")
         product_columns = create_product_display(products, "grains_pasta/default.png")
         
         return ft.View(
@@ -409,7 +409,7 @@ def main(page: ft.Page):
 
     def Cart_page():
         all_products = {}
-        categories = ["fruits", "vegetables", "meat", "drinks", "snacks", "bakery", "dairy", "grains & pasta", "cosmetics", "breakfast"]
+        categories = ["fruits", "vegetables", "meat", "drinks", "snacks", "bakery", "dairy", "grains", "cosmetics", "breakfast"]
         for category in categories:
             products = fetch_products(category)
             all_products.update({p["name"]: p for p in products})
