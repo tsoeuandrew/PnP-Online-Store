@@ -338,7 +338,8 @@ def main(page: ft.Page):
         return ft.View(
             "/ten",
             controls=[
-                ft.Text("Pick An Pay Online Store", size=50),
+                ft.Text("Pick An Pay Online Store", size=70),
+                ft.Text("Grains and Pasta", size=50),
                 ft.Column(product_columns),
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
