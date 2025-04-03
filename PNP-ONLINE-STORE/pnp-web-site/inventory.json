@@ -1,1 +1,129 @@
-{}
+{
+    "Fruits": [
+        {"name": "banana", "image": "fruits/banana.png", "quantity": 25, "price": 18.50},
+        {"name": "mango", "image": "fruits/mango.png", "quantity": 25, "price": 18.50},
+        {"name": "orange", "image": "fruits/orange.png", "quantity": 25, "price": 18.50},
+        {"name": "pear", "image": "fruits/pear.png", "quantity": 25, "price": 18.50},
+        {"name": "pineapple", "image": "fruits/pineapple.png", "quantity": 25, "price": 18.50},
+        {"name": "plums", "image": "fruits/plums.png", "quantity": 25, "price": 18.50},
+        {"name": "red apple", "image": "fruits/red-apple.png", "quantity": 25, "price": 18.50},
+        {"name": "soft citrus", "image": "fruits/soft-citrus.png", "quantity": 25, "price": 18.50}
+    ],
+    "Vegetables": [
+        {"name": "beetroot-3kg", "image": "vegetables/beetroot-3kg.png", "quantity": 25, "price": 18.50},
+        {"name": "cabbage", "image": "vegetables/cabbage.png", "quantity": 25, "price": 18.50},
+        {"name": "carrots", "image": "vegetables/carrots.png", "quantity": 25, "price": 18.50},
+        {"name": "potato", "image": "vegetables/potato.png", "quantity": 25, "price": 18.50},
+        {"name": "pumpkin", "image": "vegetables/pumpkin.png", "quantity": 25, "price": 18.50},
+        {"name": "red-cabbage", "image": "vegetables/red-cabbage.png", "quantity": 25, "price": 18.50},
+        {"name": "red-onion", "image": "vegetables/red-onion.png", "quantity": 25, "price": 18.50},
+        {"name": "spinach", "image": "vegetables/spinach.png", "quantity": 25, "price": 18.50}
+    ],
+    "Meat": [
+        {"name": "baby hake", "image": "meat/baby-hake.png", "quantity": 25, "price": 18.50},
+        {"name": "chicken-5kg", "image": "meat/chicken-5kg.png", "quantity": 25, "price": 18.50},
+        {"name": "chicken-necks-5kg", "image": "meat/chicken-necks-5kg.png", "quantity": 25, "price": 18.50},
+        {"name": "chicken", "quantity": 15, "price": 5.00},
+        {"name": "beef", "quantity": 10, "price": 6.50},
+        {"name": "pork", "quantity": 8, "price": 5.75},
+        {"name": "lamb", "quantity": 5, "price": 7.20},
+        {"name": "turkey", "quantity": 4, "price": 8.00},
+        {"name": "fish", "quantity": 12, "price": 4.50},
+        {"name": "bacon", "quantity": 6, "price": 5.25},
+        {"name": "sausage", "quantity": 10, "price": 4.00},
+        {"name": "steak", "quantity": 5, "price": 8.50}
+    ],
+    "Snacks": [
+        {"name": "chips", "quantity": 20, "price": 2.00},
+        {"name": "simba chips", "quantity": 25, "price": 2.50},
+        {"name": "doritos", "quantity": 20, "price": 2.75},
+        {"name": "lays", "quantity": 18, "price": 2.60},
+        {"name": "candy", "quantity": 30, "price": 1.00},
+        {"name": "popcorn", "quantity": 25, "price": 1.75},
+        {"name": "chocolate bar", "quantity": 18, "price": 2.50},
+        {"name": "dark chocolate", "quantity": 15, "price": 3.00},
+        {"name": "milk chocolate", "quantity": 20, "price": 2.75},
+        {"name": "white chocolate", "quantity": 12, "price": 3.25},
+        {"name": "hazelnut chocolate", "quantity": 10, "price": 3.50},
+        {"name": "pretzels", "quantity": 22, "price": 1.80},
+        {"name": "cookies", "quantity": 28, "price": 2.25},
+        {"name": "waffles", "quantity": 15, "price": 2.75},
+        {"name": "biscuits", "quantity": 20, "price": 1.90},
+        {"name": "chewing gum", "quantity": 40, "price": 1.00},
+        {"name": "granola bars", "quantity": 18, "price": 2.80},
+        {"name": "fruit snacks", "quantity": 22, "price": 1.50},
+        {"name": "rice cakes", "quantity": 25, "price": 1.20},
+        {"name": "trail mix", "quantity": 10, "price": 3.20}
+    ],
+    "Drinks": [
+        {"name": "cocacola", "image": "drinks/cocacola-2L.png", "quantity": 25, "price": 18.50},
+        {"name": "fanta", "image": "drinks/fanta-2L.png", "quantity": 25, "price": 18.50},
+        {"name": "pepsi", "image": "drinks/pepsi-2L.png", "quantity": 25, "price": 18.50},
+        {"name": "sprite", "image": "drinks/sprite-2L.png", "quantity": 25, "price": 18.50},
+        {"name": "stoney", "image": "drinks/stoney-2L.png", "quantity": 25, "price": 18.50},
+        {"name": "twist", "image": "drinks/twist-2L.png", "quantity": 25, "price": 18.50}
+    ],
+    "Dairy": [
+        {"name": "milk", "quantity": 20, "price": 1.80},
+        {"name": "cheese", "quantity": 15, "price": 3.75},
+        {"name": "yogurt", "quantity": 18, "price": 2.20},
+        {"name": "butter", "quantity": 10, "price": 4.00},
+        {"name": "cream", "quantity": 12, "price": 3.25},
+        {"name": "ice cream", "quantity": 8, "price": 4.50},
+        {"name": "sour cream", "quantity": 10, "price": 3.00},
+        {"name": "cream cheese", "quantity": 6, "price": 3.50}
+    ],
+    "Bakery": [
+        {"name": "bread-white", "image": "bakery/bread-white.png", "quantity": 25, "price": 18.50},
+        {"name": "bread-brown", "image": "bakery/bread-brown.png", "quantity": 25, "price": 18.50},
+        {"name": "sasko-white", "image": "bakery/sasko-white.png", "quantity": 25, "price": 18.50},
+        {"name": "sasko-brown", "image": "bakery/sasko-brown.png", "quantity": 25, "price": 18.50},
+        {"name": "sunbake-brown", "image": "bakery/sunbake-brown.png", "quantity": 25, "price": 18.50},
+        {"name": "blue ribbon", "image": "bakery/blueribbon.png", "quantity": 25, "price": 18.50},
+        {"name": "buns-10", "image": "bakery/buns-10.png", "quantity": 25, "price": 18.50},
+        {"name": "cupcakes", "image": "bakery/cupcakes.png", "quantity": 25, "price": 18.50},
+        {"name": "rainbow cake", "image": "bakery/rainbow-cake.png", "quantity": 25, "price": 18.50},
+        {"name": "dessert-buns6", "image": "bakery/dessert-buns6.png", "quantity": 25, "price": 18.50},
+        {"name": "vanilla-cake", "image": "bakery/vanilla-cake.png", "quantity": 25, "price": 18.50},
+        {"name": "chocolate-cake", "image": "bakery/chocolate-cake.png", "quantity": 25, "price": 18.50}
+    ],
+    "Grains & Pasta": [
+        {"name": "noodles", "quantity": 35, "price": 2.50},
+        {"name": "rice", "quantity": 40, "price": 3.00},
+        {"name": "spaghetti", "quantity": 25, "price": 2.75},
+        {"name": "macaroni", "quantity": 30, "price": 2.60},
+        {"name": "oats", "quantity": 20, "price": 2.40},
+        {"name": "quinoa", "quantity": 8, "price": 3.50},
+        {"name": "couscous", "quantity": 10, "price": 3.00},
+        {"name": "polenta", "quantity": 5, "price": 3.20}
+    ],
+    "Bath Stuff": [
+        {"name": "shampoo", "quantity": 20, "price": 3.50},
+        {"name": "conditioner", "quantity": 20, "price": 3.75},
+        {"name": "body wash", "quantity": 15, "price": 4.00},
+        {"name": "soap", "quantity": 30, "price": 1.50},
+        {"name": "toothpaste", "quantity": 25, "price": 2.00},
+        {"name": "toothbrush", "quantity": 30, "price": 1.25},
+        {"name": "lotion", "quantity": 12, "price": 3.00},
+        {"name": "deodorant", "quantity": 20, "price": 2.50},
+        {"name": "shaving cream", "quantity": 10, "price": 3.00},
+        {"name": "razor", "quantity": 15, "price": 2.25}
+    ],
+    "Breakfast": [
+        {"name": "cereal", "quantity": 20, "price": 2.20},
+        {"name": "granola", "quantity": 15, "price": 2.50},
+        {"name": "muesli", "quantity": 18, "price": 2.40},
+        {"name": "pancake mix", "quantity": 10, "price": 3.00},
+        {"name": "toast", "quantity": 30, "price": 1.75}
+    ],
+    "Household": [
+        {"name": "toilet paper", "quantity": 50, "price": 1.80},
+        {"name": "tissue paper", "quantity": 25, "price": 1.50},
+        {"name": "laundry powder", "quantity": 15, "price": 3.00},
+        {"name": "cleaning wipes", "quantity": 20, "price": 2.20},
+        {"name": "dishwashing liquid", "quantity": 25, "price": 2.50},
+        {"name": "garbage bags", "quantity": 30, "price": 1.60},
+        {"name": "scrub brushes", "quantity": 12, "price": 2.80},
+        {"name": "sponges", "quantity": 40, "price": 1.40}
+    ]
+}
