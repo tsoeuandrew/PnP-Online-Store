@@ -87,7 +87,7 @@
         {"name": "vanilla-cake", "image": "bakery/vanilla-cake.png", "quantity": 25, "price": 18.50},
         {"name": "chocolate-cake", "image": "bakery/chocolate-cake.png", "quantity": 25, "price": 18.50}
     ],
-    "Grains & Pasta": [
+    "Grains and Pasta": [
         {"name": "noodles", "quantity": 35, "price": 2.50},
         {"name": "rice", "quantity": 40, "price": 3.00},
         {"name": "spaghetti", "quantity": 25, "price": 2.75},

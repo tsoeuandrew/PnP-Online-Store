@@ -332,7 +332,7 @@ def main(page: ft.Page):
         )
 
     def Grains_Pasta():
-        products = fetch_products("grains & pasta")
+        products = fetch_products("grains and pasta")
         product_columns = create_product_display(products, "grains_pasta/default.png")
         
         return ft.View(
