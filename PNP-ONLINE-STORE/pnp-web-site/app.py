@@ -6,36 +6,49 @@ app = Flask(__name__)
 # In-memory cart (for simplicity; in production, use a database)
 cart = {}
 
-# Load inventory data
+#open inventory file
 try:
+    products_data = {}
     with open("inventory.json", "r") as file:
         products_data = json.load(file)
     print("Products loaded successfully!")
 except FileNotFoundError:
     print("Error: The file 'inventory.json' was not found.")
-    with open("inventory.json", "w") as file:
-        json.dump({}, file)  # Create an empty inventory
-    products_data = {}
+    file = open("inventory.json", "w")              #create new inventory if no iventory found
 except json.JSONDecodeError:
     print("Error: The file 'inventory.json' contains invalid JSON.")
-    products_data = {}
 
 # Generic endpoint to get products by category
 @app.route('/api/products/<category>', methods=['GET'])
 def get_products(category):
-    category_data = products_data.get(category, [])
+    # Capitalize first letter to match your inventory structure
+    formatted_category = category.capitalize()       #capitalise first letter
+    category_data = products_data.get(formatted_category, [])
     return jsonify(category_data)
 
-# Add item to cart
+# Add item to cart with quantity check
 @app.route('/api/cart/add', methods=['POST'])
 def add_to_cart():
     data = request.get_json()
     product_name = data.get('product_name')
-    if product_name in cart:
-        cart[product_name] += 1
-    else:
-        cart[product_name] = 1
-    return jsonify({"message": f"Added {product_name} to cart", "cart": cart})
+    
+    # Check if product exists in inventory and has sufficient quantity
+    for category in products_data:
+        for product in products_data[category]:
+            if product['name'] == product_name:
+                if product['quantity'] > 0:
+                    if product_name in cart:
+                        if product['quantity'] > cart[product_name]:
+                            cart[product_name] += 1
+                            return jsonify({"message": f"Added {product_name} to cart", "cart": cart})
+                        else:
+                            return jsonify({"error": f"Insufficient quantity of {product_name}"}), 400
+                    else:
+                        cart[product_name] = 1
+                        return jsonify({"message": f"Added {product_name} to cart", "cart": cart})
+                else:
+                    return jsonify({"error": f"{product_name} is out of stock"}), 400
+    return jsonify({"error": f"Product {product_name} not found"}), 404
 
 # Get cart contents
 @app.route('/api/cart', methods=['GET'])
@@ -49,5 +62,5 @@ def hello():
     name = data.get('name', 'Guest')
     return jsonify({"reply": f"Hello, {name}!"})
 
-if __name__ == '__main__':  # Fixed typo: '_main_' -> '__main__'
+if __name__ == '__main__': 
     app.run(debug=True, port=5000)
