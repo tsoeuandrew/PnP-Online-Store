@@ -18,6 +18,68 @@ except FileNotFoundError:
 except json.JSONDecodeError:
     print("Error: The file 'inventory.json' contains invalid JSON.")
 
+#open user file
+try:
+    user_data = {}
+    with open("user.json", "r") as file:
+        user_data = json.load(file)
+    print("user loaded successfully!")
+except FileNotFoundError:
+    print("Error: The file 'user.json' was not found.")
+    file = open("user.json", "w")              #create new user if no user found
+except json.JSONDecodeError:
+    print("Error: The file 'user.json' contains invalid JSON.")
+
+@app.route('/api/save_user', methods=['POST'])
+def save_user():
+    # Get JSON data from the request
+    info = request.get_json()
+    
+    # Extract fields with default empty strings
+    username = info.get("username", "").strip()
+    id_number = info.get("ID Number", "").strip()
+    mobile = info.get("Mobile Number", "").strip()
+    address = info.get("Physical Address", "").strip()
+
+    # Basic validation: ensure all fields are provided
+    if not username:
+        return jsonify({"error": "Username is required"}), 400
+    if not id_number:
+        return jsonify({"error": "ID Number is required"}), 400
+    if not mobile:
+        return jsonify({"error": "Mobile Number is required"}), 400
+    if not address:
+        return jsonify({"error": "Physical Address is required"}), 400
+    
+    new_id = id_number.value
+    try:
+        with open(user_data, 'r') as file:
+                data = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+         data = []
+
+    # Check for duplicate ID number
+    for record in data:
+        if record.get("ID Number") == id_number:
+            return jsonify({"error": "This user already in the database"}), 400
+            
+    # Create user record
+    user_record = {
+        "username": username,
+        "ID Number": id_number,
+        "Mobile Number": mobile,
+        "Physical Address": address
+    }
+    data.append(user_record)
+
+    # Save to file
+    try:
+        with open(user_data, 'w') as file:
+            json.dump(data, file, indent=4)
+        return jsonify({"message": "Data saved successfully"})
+    except Exception as ex:
+        return jsonify({"error": f"Error saving data: {str(ex)}"}), 500
+
 # Generic endpoint to get products by category
 @app.route('/api/products/<category>', methods=['GET'])
 def get_products(category):

@@ -12,13 +12,19 @@ def main(page: ft.Page):
     # Feedback for different fields
     username_feedback = ft.Text(color="red", weight="bold")
     id_feedback = ft.Text(color="red", weight="bold")
-    feedback = ft.Text(color="red", weight="bold")
+    feedback = ft.Text(color="green", weight="bold")
+    password_feedback = ft.Text(color="red", weight="bold")
+    mobile_feedback = ft.Text(color="red", weight="bold")
+    gender_feedback = ft.Text(color="red", weight="bold")
 
     # Clear errors when submitting the form
     def clear_feedback():
         username_feedback.value = ""
         id_feedback.value = ""
         feedback.value = ""
+        password_feedback = ""
+        mobile_feedback = ""
+        gender_feedback = ""
 
     # Create input and output controls
     id_number = ft.TextField(label="Enter ID Number", autofocus=True)
@@ -27,9 +33,60 @@ def main(page: ft.Page):
     mobile = ft.TextField(label="Enter Mobile Number")
     password = ft.TextField(label="Enter Password")
     address = ft.TextField(label="Physical Address", height=100, multiline=True)
-    output = ft.Text()
+
+    # Gender dropdown
+    gender_dropdown = ft.Dropdown(
+        label="Gender",
+        value="Please Select",  # Default value (not in options list)
+        options=[
+            ft.dropdown.Option("Male"),
+            ft.dropdown.Option("Female")
+        ],
+    )
 
     cart = {}
+    def error_handler():
+        clear_feedback()
+        has_errors = False
+        try:
+            # Validate username
+            if not username.value.strip():  # Check if the names field is empty
+                username_feedback.value = "udername cannot be empty."
+                has_errors = True
+            elif not username.value.replace(" ", "").isalpha():
+                username_feedback.value = "username must only contain alphabetic characters."
+                has_errors = True
+
+            # Vlidate password
+            if len(password) <= 4:
+                password_feedback.value = "ID Number must be 4 units or grater long."
+                has_errors = True
+
+            # Validate ID Number
+            id_number_cleaned = id_number.value.strip()
+            if not id_number_cleaned.isdigit() or len(id_number_cleaned) != 13:
+                id_feedback.value = "password must be 13 digits long and numeric."
+                has_errors = True
+
+            # Validate mobile Number
+            mobile_cleaned = mobile.value.strip()
+            if not mobile_cleaned.isdigit() or len(mobile_cleaned) != 10:
+                mobile_feedback.value = "mobile must be 10 digits long and numeric."
+                has_errors = True
+
+            # Validate Gender selection
+            if gender_dropdown.value == "Please Select":
+                gender_feedback.value = "Please select a Gender."
+                has_errors = True
+
+        except Exception as e:
+            feedback.value = f"Unexpected Error: {str(e)}"
+            has_errors = True  # Mark an error occurred
+
+        finally:
+            page.update()
+
+        return has_errors  # Return True if errors exist, False otherwise # Check if the user has entered a valid name
 
     # Function to fetch products from Flask
     def fetch_products(category):
@@ -73,64 +130,56 @@ def main(page: ft.Page):
         
         return product_columns
 
-    def toggle_theme(e):
+    def toggle_theme():
         page.theme_mode = ft.ThemeMode.LIGHT if page.theme_mode == ft.ThemeMode.DARK else ft.ThemeMode.DARK
         page.update()
 
-    def send_name(e):
-        response = requests.post("http://localhost:5000/api/hello", json={"name": input_box.value})
-        output.value = response.json().get("reply")
-        page.update()
-
-    def save_data(e):
+    def save_user(e):
         clear_feedback()
-        user_data = "data.json"
+    # Send data to Flask backend
 
-        info = {
-            "username": username.value,
-            "ID Number": id_number.value,
-            "Mobile Number": mobile.value,
-            "Physical Address": address.value,
-        }
+    # Create user record
+    info = {
+        "username": username.value,
+        "ID Number": id_number.value,
+        "Mobile Number": mobile.value,
+        "Physical Address": address.value
+    }
+    try:
+        response = requests.post(f"http://localhost:5000/api/save_user", json=info )
+        response_data = response.json()
 
-        try:
-            new_id = id_number.value
-            try:
-                with open(user_data, 'r') as file:
-                    data = json.load(file)
-            except (FileNotFoundError, json.JSONDecodeError):
-                data = []
-
-            for record in data:
-                if record.get("ID Number") == new_id:
-                    feedback.value = "You are already in the database."
-                    page.update()
-                    return
-
-            data.append(info)
-            with open(user_data, 'w') as file:
-                json.dump(data, file, indent=4)
-            feedback.value = "Data saved successfully!"
-            page.go("/two")
-
-        except Exception as e:
-            feedback.value = f"Error saving data: {str(e)}"
-
-        finally:
+        if response.status_code == 200:
+            page.go("/")  # Navigate to log in page
+        else:
+            feedback.value = response_data["error cant access data from webside"]
+            feedback.color = ft.colors.RED
             page.update()
+
+    except requests.exceptions.RequestException as ex:
+        feedback.value = f"Error connecting to server: {str(ex)}"
+        feedback.color = ft.colors.RED
+        page.update()
 
     def login_page():
         return ft.View(
             "/",
             controls=[
                 ft.Text("Pick an Pay Online Store", size=50),
-                username,
-                password,
-                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
-                ft.ElevatedButton("Create new Account", on_click=lambda e: page.go("/thirteen")),
-                ft.Switch(label="Theme", on_change=toggle_theme)
+                username,username_feedback,
+                password,password_feedback,
+                ft.row([
+                    ft.ElevatedButton("Login", on_click=Login),
+                    ft.ElevatedButton("Create new Account", on_click=lambda e: page.go("/thirteen")),
+                    ft.Switch(label="Theme", on_change=toggle_theme)
+                ], scroll=ft.ScrollMode.AUTO, alignment=ft.MainAxisAlignment.CENTER, spacing=10)
             ],
         )
+    
+    def Login():
+        page.go("/two")
+
+
 
     def home_page():
         return ft.View(
@@ -139,8 +188,6 @@ def main(page: ft.Page):
                 ft.Text("Welcome To Pick An Pay Online Store", size=50),
                 ft.Switch(label="Theme", on_change=toggle_theme),
                 input_box,
-                ft.ElevatedButton("Send", on_click=send_name),
-                output,
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -477,20 +524,7 @@ def main(page: ft.Page):
         page.add(ft.Text(f"Added {product_name} to cart!"))
         page.update()
 
-    def save_user():
-        return ft.View(
-            "/thirteen",
-            controls=[
-                ft.Text("Pick An Pay Online Store", size=50),
-                username, username_feedback,
-                password,
-                id_number, id_feedback,
-                mobile,
-                ft.ElevatedButton("save", on_click=save_data),
-                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
-                feedback
-            ],
-        )
+    
 
     def route_change(route):
         page.views.clear()
