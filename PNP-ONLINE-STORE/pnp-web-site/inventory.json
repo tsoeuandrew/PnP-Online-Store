@@ -97,7 +97,7 @@
         {"name": "couscous", "quantity": 10, "price": 3.00},
         {"name": "polenta", "quantity": 5, "price": 3.20}
     ],
-    "Bath Stuff": [
+    "Cosmetics": [
         {"name": "shampoo", "quantity": 20, "price": 3.50},
         {"name": "conditioner", "quantity": 20, "price": 3.75},
         {"name": "body wash", "quantity": 15, "price": 4.00},

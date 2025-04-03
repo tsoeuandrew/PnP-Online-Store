@@ -150,7 +150,7 @@ def main(page: ft.Page):
                     ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
                     ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
                     ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Cosmetics", on_click=lambda e: page.go("/eleven")),
                     ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
                 ], scroll=ft.ScrollMode.AUTO, alignment=ft.MainAxisAlignment.CENTER, spacing=10)
             ],
@@ -173,7 +173,7 @@ def main(page: ft.Page):
                     ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
                     ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
                     ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Cosmetics", on_click=lambda e: page.go("/eleven")),
                     ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
                     ft.ElevatedButton("Go to Cart", on_click=lambda e: page.go("/fourteen")),
                 ], scroll=ft.ScrollMode.AUTO, alignment=ft.MainAxisAlignment.CENTER, spacing=10),
@@ -198,7 +198,7 @@ def main(page: ft.Page):
                     ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
                     ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
                     ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Cosmetics", on_click=lambda e: page.go("/eleven")),
                     ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
                     ft.ElevatedButton("Go to Cart", on_click=lambda e: page.go("/fourteen")),
                 ], scroll=ft.ScrollMode.AUTO, alignment=ft.MainAxisAlignment.CENTER, spacing=10),
@@ -223,7 +223,7 @@ def main(page: ft.Page):
                     ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
                     ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
                     ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Cosmetics", on_click=lambda e: page.go("/eleven")),
                     ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
                     ft.ElevatedButton("Go to Cart", on_click=lambda e: page.go("/fourteen")),
                 ], scroll=ft.ScrollMode.AUTO, alignment=ft.MainAxisAlignment.CENTER, spacing=10),
@@ -248,7 +248,7 @@ def main(page: ft.Page):
                     ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
                     ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
                     ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Cosmetics", on_click=lambda e: page.go("/eleven")),
                     ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
                     ft.ElevatedButton("Go to Cart", on_click=lambda e: page.go("/fourteen")),
                 ], scroll=ft.ScrollMode.AUTO, alignment=ft.MainAxisAlignment.CENTER, spacing=10),
@@ -298,7 +298,7 @@ def main(page: ft.Page):
                     ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
                     ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
                     ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Cosmetics", on_click=lambda e: page.go("/eleven")),
                     ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
                     ft.ElevatedButton("Go to Cart", on_click=lambda e: page.go("/fourteen")),
                 ], scroll=ft.ScrollMode.AUTO, alignment=ft.MainAxisAlignment.CENTER, spacing=10),
@@ -323,7 +323,7 @@ def main(page: ft.Page):
                     ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
                     ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
                     ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Cosmetics", on_click=lambda e: page.go("/eleven")),
                     ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
                     ft.ElevatedButton("Go to Cart", on_click=lambda e: page.go("/fourteen")),
                 ], scroll=ft.ScrollMode.AUTO, alignment=ft.MainAxisAlignment.CENTER, spacing=10),
@@ -332,7 +332,7 @@ def main(page: ft.Page):
         )
 
     def Grains_Pasta():
-        products = fetch_products("grains & Pasta")
+        products = fetch_products("grains & pasta")
         product_columns = create_product_display(products, "grains_pasta/default.png")
         
         return ft.View(
@@ -349,7 +349,7 @@ def main(page: ft.Page):
                     ft.ElevatedButton("Snacks", on_click=lambda e: page.go("/seven")),
                     ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
                     ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Cosmetics", on_click=lambda e: page.go("/eleven")),
                     ft.ElevatedButton("Breakfast", on_click=lambda e: page.go("/twelve")),
                     ft.ElevatedButton("Go to Cart", on_click=lambda e: page.go("/fourteen")),
                 ], scroll=ft.ScrollMode.AUTO, alignment=ft.MainAxisAlignment.CENTER, spacing=10),
@@ -357,9 +357,9 @@ def main(page: ft.Page):
             ],
         )
 
-    def Bath_Stuff():
-        products = fetch_products("bath stuff")
-        product_columns = create_product_display(products, "bath_stuff/default.png")
+    def Cosmetics():
+        products = fetch_products("Cosmetics")
+        product_columns = create_product_display(products, "cosmetics/default.png")
         
         return ft.View(
             "/eleven",
@@ -400,7 +400,7 @@ def main(page: ft.Page):
                     ft.ElevatedButton("Bakery", on_click=lambda e: page.go("/eight")),
                     ft.ElevatedButton("Dairy", on_click=lambda e: page.go("/nine")),
                     ft.ElevatedButton("Grains and Pasta", on_click=lambda e: page.go("/ten")),
-                    ft.ElevatedButton("Bath Stuff", on_click=lambda e: page.go("/eleven")),
+                    ft.ElevatedButton("Cosmetics", on_click=lambda e: page.go("/eleven")),
                     ft.ElevatedButton("Go to Cart", on_click=lambda e: page.go("/fourteen")),
                 ], scroll=ft.ScrollMode.AUTO, alignment=ft.MainAxisAlignment.CENTER, spacing=10),
                 ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
@@ -409,7 +409,7 @@ def main(page: ft.Page):
 
     def Cart_page():
         all_products = {}
-        categories = ["fruits", "vegetables", "meat", "drinks", "snacks", "bakery", "dairy", "grains & pasta", "bath stuff", "breakfast"]
+        categories = ["fruits", "vegetables", "meat", "drinks", "snacks", "bakery", "dairy", "grains & pasta", "cosmetics", "breakfast"]
         for category in categories:
             products = fetch_products(category)
             all_products.update({p["name"]: p for p in products})
@@ -515,7 +515,7 @@ def main(page: ft.Page):
         elif page.route == "/ten":
             page.views.append(Grains_Pasta())
         elif page.route == "/eleven":
-            page.views.append(Bath_Stuff())
+            page.views.append(Cosmetics())
         elif page.route == "/twelve":
             page.views.append(Breakfast())
         elif page.route == "/thirteen":
