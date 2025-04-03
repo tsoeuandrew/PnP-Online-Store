@@ -33,13 +33,13 @@ except json.JSONDecodeError:
 @app.route('/api/save_user', methods=['POST'])
 def save_user():
     # Get JSON data from the request
-    info = request.get_json()
+    user = request.get_json()
     
     # Extract fields with default empty strings
-    username = info.get("username", "").strip()
-    id_number = info.get("ID Number", "").strip()
-    mobile = info.get("Mobile Number", "").strip()
-    address = info.get("Physical Address", "").strip()
+    username = user.get("username", "").strip()
+    id_number = user.get("ID Number", "").strip()
+    mobile = user.get("Mobile Number", "").strip()
+    address = user.get("Physical Address", "").strip()
 
     # Basic validation: ensure all fields are provided
     if not username:
@@ -51,31 +51,24 @@ def save_user():
     if not address:
         return jsonify({"error": "Physical Address is required"}), 400
     
-    new_id = id_number.value
-    try:
-        with open(user_data, 'r') as file:
-                data = json.load(file)
-    except (FileNotFoundError, json.JSONDecodeError):
-         data = []
-
     # Check for duplicate ID number
-    for record in data:
+    for record in user_data:
         if record.get("ID Number") == id_number:
             return jsonify({"error": "This user already in the database"}), 400
             
     # Create user record
-    user_record = {
+    new_user = {
         "username": username,
         "ID Number": id_number,
         "Mobile Number": mobile,
         "Physical Address": address
     }
-    data.append(user_record)
+    user_data.append(new_user)
 
     # Save to file
     try:
-        with open(user_data, 'w') as file:
-            json.dump(data, file, indent=4)
+        with open(user, 'w') as file:
+            json.dump(user_data, file, indent=4)
         return jsonify({"message": "Data saved successfully"})
     except Exception as ex:
         return jsonify({"error": f"Error saving data: {str(ex)}"}), 500

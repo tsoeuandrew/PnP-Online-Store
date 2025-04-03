@@ -28,14 +28,13 @@ def main(page: ft.Page):
 
     # Create input and output controls
     id_number = ft.TextField(label="Enter ID Number", autofocus=True)
-    input_box = ft.TextField(label="Enter name")
     username = ft.TextField(label="Enter username")
     mobile = ft.TextField(label="Enter Mobile Number")
     password = ft.TextField(label="Enter Password")
     address = ft.TextField(label="Physical Address", height=100, multiline=True)
 
     # Gender dropdown
-    gender_dropdown = ft.Dropdown(
+    gender = ft.Dropdown(
         label="Gender",
         value="Please Select",  # Default value (not in options list)
         options=[
@@ -75,7 +74,7 @@ def main(page: ft.Page):
                 has_errors = True
 
             # Validate Gender selection
-            if gender_dropdown.value == "Please Select":
+            if gender.value == "Please Select":
                 gender_feedback.value = "Please select a Gender."
                 has_errors = True
 
@@ -134,32 +133,36 @@ def main(page: ft.Page):
         page.theme_mode = ft.ThemeMode.LIGHT if page.theme_mode == ft.ThemeMode.DARK else ft.ThemeMode.DARK
         page.update()
 
-    def save_user(e):
-        clear_feedback()
-    # Send data to Flask backend
+    def save_user():
+        if error_handler():  # Check for errors
+            return  # Don't save if there are errors
+        
+        # Create user record
+        info = {
+            "username": username.value,
+            "ID Number": id_number.value,
+            "Mobile Number": mobile.value,
+            "Physical Address": address.value
+        }# Send data to Flask backend
+        try:
+            response = requests.post(f"http://localhost:5000/api/save_user", json=info )
+            response_data = response.json()
 
-    # Create user record
-    info = {
-        "username": username.value,
-        "ID Number": id_number.value,
-        "Mobile Number": mobile.value,
-        "Physical Address": address.value
-    }
-    try:
-        response = requests.post(f"http://localhost:5000/api/save_user", json=info )
-        response_data = response.json()
+            if response.status_code == 200:
+                page.go("/")  # Navigate to log in page
+            else:
+                feedback.value = response_data["error cant access data from webside"]
+                feedback.color = ft.colors.RED
+                page.update()
 
-        if response.status_code == 200:
-            page.go("/")  # Navigate to log in page
-        else:
-            feedback.value = response_data["error cant access data from webside"]
+        except requests.exceptions.RequestException as ex:
+            feedback.value = f"Error connecting to server: {str(ex)}"
             feedback.color = ft.colors.RED
             page.update()
 
-    except requests.exceptions.RequestException as ex:
-        feedback.value = f"Error connecting to server: {str(ex)}"
-        feedback.color = ft.colors.RED
-        page.update()
+    def Login():
+        page.go("/two")
+
 
     def login_page():
         return ft.View(
@@ -168,7 +171,7 @@ def main(page: ft.Page):
                 ft.Text("Pick an Pay Online Store", size=50),
                 username,username_feedback,
                 password,password_feedback,
-                ft.row([
+                ft.Row([
                     ft.ElevatedButton("Login", on_click=Login),
                     ft.ElevatedButton("Create new Account", on_click=lambda e: page.go("/thirteen")),
                     ft.Switch(label="Theme", on_change=toggle_theme)
@@ -176,9 +179,22 @@ def main(page: ft.Page):
             ],
         )
     
-    def Login():
-        page.go("/two")
-
+    def Register():
+        return ft.View(
+            "/",
+            controls=[
+                ft.Text("Pick an Pay Online Store", size=50),
+                username,username_feedback,
+                password,password_feedback,
+                id_number,id_feedback,
+                gender,gender_feedback,
+                mobile,mobile_feedback,
+                ft.Row([
+                    ft.ElevatedButton("save user", on_click=save_user),
+                    ft.Switch(label="Theme", on_change=toggle_theme)
+                ], scroll=ft.ScrollMode.AUTO, alignment=ft.MainAxisAlignment.CENTER, spacing=10)
+            ]
+        )
 
 
     def home_page():
@@ -187,7 +203,6 @@ def main(page: ft.Page):
             controls=[
                 ft.Text("Welcome To Pick An Pay Online Store", size=50),
                 ft.Switch(label="Theme", on_change=toggle_theme),
-                input_box,
                 ft.Row([
                     ft.ElevatedButton("Fruits", on_click=lambda e: page.go("/third")),
                     ft.ElevatedButton("Vegetables", on_click=lambda e: page.go("/four")),
@@ -553,7 +568,7 @@ def main(page: ft.Page):
         elif page.route == "/twelve":
             page.views.append(Breakfast())
         elif page.route == "/thirteen":
-            page.views.append(save_user())
+            page.views.append(Register())
         elif page.route == "/fourteen":
             page.views.append(Cart_page())
         page.update()
