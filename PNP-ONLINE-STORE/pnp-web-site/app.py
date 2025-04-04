@@ -82,7 +82,7 @@ def save_user():
 def login():
     user = request.get_json()
     
-    username = user.get("Username", "").strip()
+    username = user.get("Username", "")
     password = user.get("Password", "")
 
     if not username:
