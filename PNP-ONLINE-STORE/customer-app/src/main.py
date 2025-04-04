@@ -103,14 +103,26 @@ def main(page: ft.Page):
     def create_product_display(products, default_image_path):
         price_controls = [ft.Text(f"Price: R{product['price']:.2f}") for product in products]
         name_controls = [ft.Text(product["name"], weight="bold") for product in products]
+
+
+
+
+
         image_controls = [
-            ft.Image(
-                src=product.get("image", default_image_path),
-                width=150, height=150,
-                fit=ft.ImageFit.CONTAIN,
-                error_content=ft.Text("No image")
+            ft.Container(
+                content=ft.Image(
+                    src=product.get("image", default_image_path),
+                    width=150,
+                    height=150,
+                    fit=ft.ImageFit.CONTAIN,
+                    error_content=ft.Text("No image")
+                ),
+                on_click=lambda e, p=product: add_to_cart(p)
             ) for product in products
         ]
+
+
+
 
         product_columns = []
         for i in range(0, len(image_controls), 8):
