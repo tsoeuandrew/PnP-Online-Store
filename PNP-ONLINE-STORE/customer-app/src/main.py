@@ -9,6 +9,8 @@ def main(page: ft.Page):
     page.window_resizable = True
     page.theme_mode = ft.ThemeMode.DARK
 
+    cart = {}
+
     # Feedback for different fields
     username_feedback = ft.Text(color="red", weight="bold")
     id_feedback = ft.Text(color="red", weight="bold")
@@ -17,22 +19,12 @@ def main(page: ft.Page):
     mobile_feedback = ft.Text(color="red", weight="bold")
     gender_feedback = ft.Text(color="red", weight="bold")
 
-    # Clear errors when submitting the form
-    def clear_feedback():
-        username_feedback.value = ""
-        id_feedback.value = ""
-        feedback.value = ""
-        password_feedback = ""
-        mobile_feedback = ""
-        gender_feedback = ""
-
     # Create input and output controls
     id_number = ft.TextField(label="Enter ID Number", autofocus=True)
     username = ft.TextField(label="Enter username")
     mobile = ft.TextField(label="Enter Mobile Number")
     password = ft.TextField(label="Enter Password")
     address = ft.TextField(label="Physical Address", height=100, multiline=True)
-
     # Gender dropdown
     gender = ft.Dropdown(
         label="Gender",
@@ -43,8 +35,16 @@ def main(page: ft.Page):
         ],
     )
 
-    cart = {}
-    def error_handler():
+    # Clear errors when submitting the form
+    def clear_feedback():
+        username_feedback.value = ""
+        id_feedback.value = ""
+        feedback.value = ""
+        password_feedback = ""
+        mobile_feedback = ""
+        gender_feedback = ""
+
+    def error_handler(e):
         clear_feedback()
         has_errors = False
         try:
@@ -84,7 +84,6 @@ def main(page: ft.Page):
 
         finally:
             page.update()
-
         return has_errors  # Return True if errors exist, False otherwise # Check if the user has entered a valid name
 
     # Function to fetch products from Flask
@@ -133,16 +132,18 @@ def main(page: ft.Page):
         page.theme_mode = ft.ThemeMode.LIGHT if page.theme_mode == ft.ThemeMode.DARK else ft.ThemeMode.DARK
         page.update()
 
-    def save_user():
-        if error_handler():  # Check for errors
+    def save_user(e):
+        if error_handler(e):  # Check for errors
             return  # Don't save if there are errors
         
         # Create user record
         info = {
-            "username": username.value,
+            "Username": username.value,
+            "Password": password.value,
             "ID Number": id_number.value,
             "Mobile Number": mobile.value,
-            "Physical Address": address.value
+            "Physical Address": address.value,
+            "Gender": gender.value
         }# Send data to Flask backend
         try:
             response = requests.post(f"http://localhost:5000/api/save_user", json=info )
@@ -155,8 +156,8 @@ def main(page: ft.Page):
                 feedback.color = ft.colors.RED
                 page.update()
 
-        except requests.exceptions.RequestException as ex:
-            feedback.value = f"Error connecting to server: {str(ex)}"
+        except requests.exceptions.RequestException as e:
+            feedback.value = f"Error connecting to server: {str(e)}"
             feedback.color = ft.colors.RED
             page.update()
 
@@ -169,8 +170,8 @@ def main(page: ft.Page):
             "/",
             controls=[
                 ft.Text("Pick an Pay Online Store", size=50),
-                username,username_feedback,
-                password,password_feedback,
+                username, username_feedback,
+                password, password_feedback,
                 ft.Row([
                     ft.ElevatedButton("Login", on_click=Login),
                     ft.ElevatedButton("Create new Account", on_click=lambda e: page.go("/thirteen")),
@@ -181,14 +182,14 @@ def main(page: ft.Page):
     
     def Register():
         return ft.View(
-            "/",
+            "/thirteen",  # Corrected route to match "/thirteen"
             controls=[
                 ft.Text("Pick an Pay Online Store", size=50),
-                username,username_feedback,
-                password,password_feedback,
-                id_number,id_feedback,
-                gender,gender_feedback,
-                mobile,mobile_feedback,
+                username, username_feedback,
+                password, password_feedback,
+                id_number, id_feedback,
+                gender, gender_feedback,
+                mobile, mobile_feedback,
                 ft.Row([
                     ft.ElevatedButton("save user", on_click=save_user),
                     ft.Switch(label="Theme", on_change=toggle_theme)
@@ -541,10 +542,10 @@ def main(page: ft.Page):
 
     
 
-    def route_change(route):
+    def route_change(route):  
         page.views.clear()
         if page.route == "/":
-            page.views.append(login_page())
+            page.views.append(login_page())  
         elif page.route == "/two":
             page.views.append(home_page())
         elif page.route == "/third":
@@ -568,7 +569,7 @@ def main(page: ft.Page):
         elif page.route == "/twelve":
             page.views.append(Breakfast())
         elif page.route == "/thirteen":
-            page.views.append(Register())
+            page.views.append(Register())  
         elif page.route == "/fourteen":
             page.views.append(Cart_page())
         page.update()

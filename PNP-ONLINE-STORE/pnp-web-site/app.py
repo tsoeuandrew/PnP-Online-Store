@@ -32,46 +32,66 @@ except json.JSONDecodeError:
 
 @app.route('/api/save_user', methods=['POST'])
 def save_user():
-    # Get JSON data from the request
     user = request.get_json()
     
-    # Extract fields with default empty strings
-    username = user.get("username", "").strip()
+    # Extract and validate required fields
+    username = user.get("Username", "").strip()
+    password = user.get("Password","")
     id_number = user.get("ID Number", "").strip()
     mobile = user.get("Mobile Number", "").strip()
     address = user.get("Physical Address", "").strip()
+    gender = user.get("Gender")
 
-    # Basic validation: ensure all fields are provided
     if not username:
         return jsonify({"error": "Username is required"}), 400
+    if not password:
+        return jsonify({"error": "password is required"}), 400
     if not id_number:
         return jsonify({"error": "ID Number is required"}), 400
     if not mobile:
         return jsonify({"error": "Mobile Number is required"}), 400
     if not address:
         return jsonify({"error": "Physical Address is required"}), 400
+    if not gender:
+        return jsonify({"error": "gender is required"}), 400
     
-    # Check for duplicate ID number
+    # Check for duplicate ID
     for record in user_data:
         if record.get("ID Number") == id_number:
             return jsonify({"error": "This user already in the database"}), 400
             
-    # Create user record
     new_user = {
         "username": username,
+        "Password": password,
         "ID Number": id_number,
         "Mobile Number": mobile,
-        "Physical Address": address
+        "Physical Address": address,
+        "Gender": gender
     }
     user_data.append(new_user)
 
-    # Save to file
+    # Save updated user data to file
     try:
-        with open(user, 'w') as file:
+        with open("user.json", 'w') as file:  # Fixed: correct filename
             json.dump(user_data, file, indent=4)
         return jsonify({"message": "Data saved successfully"})
     except Exception as ex:
         return jsonify({"error": f"Error saving data: {str(ex)}"}), 500
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    user = request.get_json()
+    
+    username = user.get("username", "").strip()
+    password = user.get("Password", "")
+
+    if not username:
+        return jsonify({"error": "Username is required"}), 400
+    if not password:
+        return jsonify({"error": "password is required"}), 400
+    for record in user_data:
+        if record.get("username") == username and record.get("Password") == password:
+            return jsonify({"error": "This user already in the database"}), 400
 
 # Generic endpoint to get products by category
 @app.route('/api/products/<category>', methods=['GET'])
