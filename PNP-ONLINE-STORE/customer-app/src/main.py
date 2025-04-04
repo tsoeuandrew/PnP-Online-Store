@@ -103,11 +103,6 @@ def main(page: ft.Page):
     def create_product_display(products, default_image_path):
         price_controls = [ft.Text(f"Price: R{product['price']:.2f}") for product in products]
         name_controls = [ft.Text(product["name"], weight="bold") for product in products]
-
-
-
-
-
         image_controls = [
             ft.Container(
                 content=ft.Image(
