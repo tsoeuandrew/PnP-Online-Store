@@ -152,7 +152,7 @@ def main(page: ft.Page):
             if response.status_code == 200:
                 page.go("/")  # Navigate to log in page
             else:
-                feedback.value = response_data["error cant access data from webside"]
+                feedback.value = response_data.get["error cant access data from webside"]
                 feedback.color = ft.colors.RED
                 page.update()
 
@@ -162,29 +162,51 @@ def main(page: ft.Page):
             page.update()
 
     def Login(e):
-        if error_handler():  # Check for errors
-            return  # Don't contimiew if there are errors
-        
-        info = {#take input from user 
+        clear_feedback()
+        has_errors = False
+        try:
+            # Validate username
+            if not username.value.strip():  # Check if the names field is empty
+                username_feedback.value = "username cannot be empty."
+                has_errors = True
+            elif not username.value.replace(" ", "").isalpha():
+                username_feedback.value = "username must only contain alphabetic characters."
+                has_errors = True
+
+            # Vlidate password
+            if len(password.value) <= 4:
+                password_feedback.value = "Pssword must be 4 units or grater long."
+                has_errors = True
+            return has_errors
+
+        except Exception as e:
+            feedback.value = f"Unexpected Error: {str(e)}"
+            has_errors = True  # Mark an error occurred
+
+        finally:
+            page.update()
+    
+        if has_errors:
+            return
+ 
+        info = {
             "Username": username.value,
             "Password": password.value,
         }
-        #send user inputs to the server
         try:
             response = requests.post(f"http://localhost:5000/api/login", json=info )
             response_data = response.json()
 
-            if response.status_code == 200: #if user in the web site storage
-                page.go("/two")  # Navigate to home page
+            if response.status_code == 200:
+                feedback.value = response_data.get("message", "Login successful!")
+                page.go("/two")
             else:
-                feedback.value = response_data["error cant access data from webside"]
-                feedback.color = ft.colors.RED
-                page.update()
-
-        except requests.exceptions.RequestException as e:
+                feedback.value = response_data.get("error", "unable to fetch data from server")
+                return []
+        except requests.RequestException as e:
             feedback.value = f"Error connecting to server: {str(e)}"
-            feedback.color = ft.colors.RED
-            page.update()
+            return []
+        page.update()
 
     def login_page():
         return ft.View(
@@ -193,6 +215,7 @@ def main(page: ft.Page):
                 ft.Text("Pick an Pay Online Store", size=50),
                 username, username_feedback,
                 password, password_feedback,
+                feedback,
                 ft.Row([
                     ft.ElevatedButton("Login", on_click=Login),
                     ft.ElevatedButton("Create new Account", on_click=lambda e: page.go("/thirteen")),
@@ -211,6 +234,7 @@ def main(page: ft.Page):
                 id_number, id_feedback,
                 gender, gender_feedback,
                 mobile, mobile_feedback,
+                address,
                 ft.Row([
                     ft.ElevatedButton("save user", on_click=save_user),
                     ft.Switch(label="Theme", on_change=toggle_theme)

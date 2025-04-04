@@ -20,7 +20,7 @@ except json.JSONDecodeError:
 
 #open user file
 try:
-    user_data = {}
+    user_data = []
     with open("user.json", "r") as file:
         user_data = json.load(file)
     print("user loaded successfully!")
