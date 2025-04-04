@@ -163,9 +163,28 @@ def main(page: ft.Page):
 
     def Login(e):
         if error_handler():  # Check for errors
-            return  # Don't save if there are errors
-        page.go("/two")
+            return  # Don't contimiew if there are errors
+        
+        info = {#take input from user 
+            "Username": username.value,
+            "Password": password.value,
+        }
+        #send user inputs to the server
+        try:
+            response = requests.post(f"http://localhost:5000/api/login", json=info )
+            response_data = response.json()
 
+            if response.status_code == 200: #if user in the web site storage
+                page.go("/two")  # Navigate to home page
+            else:
+                feedback.value = response_data["error cant access data from webside"]
+                feedback.color = ft.colors.RED
+                page.update()
+
+        except requests.exceptions.RequestException as e:
+            feedback.value = f"Error connecting to server: {str(e)}"
+            feedback.color = ft.colors.RED
+            page.update()
 
     def login_page():
         return ft.View(
