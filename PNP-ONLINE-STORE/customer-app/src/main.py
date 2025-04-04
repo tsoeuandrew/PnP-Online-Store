@@ -18,6 +18,7 @@ def main(page: ft.Page):
     password_feedback = ft.Text(color="red", weight="bold")
     mobile_feedback = ft.Text(color="red", weight="bold")
     gender_feedback = ft.Text(color="red", weight="bold")
+    cart_feedback = ft.Text(color="green", weight="bold")
 
     # Create input and output controls
     id_number = ft.TextField(label="Enter ID Number", autofocus=True)
@@ -115,9 +116,6 @@ def main(page: ft.Page):
                 on_click=lambda e, p=product: add_to_cart(p)
             ) for product in products
         ]
-
-
-
 
         product_columns = []
         for i in range(0, len(image_controls), 8):
@@ -514,77 +512,104 @@ def main(page: ft.Page):
             ],
         )
 
+    # Add to cart function
+    def add_to_cart(product):
+        product_name = product["name"]
+        cart[product_name] = cart.get(product_name, 0) + 1
+        cart_feedback.value = f"Added {product_name} to cart!"
+        page.update()
+        # Clear feedback after 2 seconds
+        import time
+        time.sleep(2)
+        cart_feedback.value = ""
+        page.update()
+
+    # Remove from cart function
+    def remove_from_cart(product):
+        product_name = product["name"]
+        if product_name in cart:
+            cart[product_name] -= 1
+            if cart[product_name] <= 0:
+                del cart[product_name]
+            cart_feedback.value = f"Removed one {product_name} from cart!"
+        page.update()
+        # Clear feedback after 2 seconds
+        import time
+        time.sleep(2)
+        cart_feedback.value = ""
+        page.update()
+    
+    # Cart page function
     def Cart_page():
+        if not cart:
+            return ft.View(
+                "/fourteen",
+                controls=[
+                    ft.Text("Pick an Pay Online Store", size=50),
+                    ft.Text("Your cart is empty", size=30),
+                    ft.ElevatedButton("Continue Shopping", on_click=lambda e: page.go("/two")),
+                    cart_feedback
+                ]
+            )
+
+        cart_items = []
+        total_cost = 0
+        
+        # Fetch all products to get current prices and images
         all_products = {}
         categories = ["fruits", "vegetables", "meat", "drinks", "snacks", "bakery", "dairy", "grains", "cosmetics", "breakfast"]
         for category in categories:
             products = fetch_products(category)
             all_products.update({p["name"]: p for p in products})
 
-        if not cart:
-            return ft.View(
-                "/fourteen",
-                controls=[
-                    ft.Text("Pick an Pay Online Store", size=50),
-                    ft.Text("Cart is empty"),
-                    ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
-                ],
-            )
-
-        image_controls = []
-        name_controls = []
-        total_price_controls = []
-
+        # Create cart item displays
         for item_name, quantity in cart.items():
             product = all_products.get(item_name)
             if product:
-                total_price = product["price"] * quantity
-                image_controls.append(
-                    ft.Container(
-                        content=ft.Image(
-                            src=product.get("image", "default.png"),
-                            width=150, height=150,
-                            fit=ft.ImageFit.CONTAIN,
-                            error_content=ft.Text("No image"),
-                        )
+                subtotal = product["price"] * quantity
+                total_cost += subtotal
+                
+                cart_items.append(
+                    ft.Row(
+                        controls=[
+                            ft.Image(
+                                src=product.get("image", "default.png"),
+                                width=100,
+                                height=100,
+                                fit=ft.ImageFit.CONTAIN
+                            ),
+                            ft.Column(
+                                controls=[
+                                    ft.Text(f"{item_name} (x{quantity})", weight="bold"),
+                                    ft.Text(f"Subtotal: R{subtotal:.2f}")
+                                ]
+                            ),
+                            ft.IconButton(
+                                icon=ft.Icons.REMOVE,  # Changed from ft.icons.REMOVE to ft.Icons.REMOVE
+                                on_click=lambda e, p=product: remove_from_cart(p)
+                            )
+                        ],
+                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN
                     )
                 )
-                name_controls.append(ft.Text(f"{item_name} (x{quantity})", weight="bold"))
-                total_price_controls.append(ft.Text(f"Total: R{total_price:.2f}"))
-
-        cart_columns = []
-        for i in range(0, len(image_controls), 8):
-            row = ft.Row(
-                controls=[
-                    ft.Column(
-                        controls=[image_controls[i], name_controls[i], total_price_controls[i]],
-                        alignment=ft.MainAxisAlignment.CENTER
-                    )
-                    for i in range(i, min(i + 8, len(image_controls)))
-                ],
-                alignment=ft.MainAxisAlignment.CENTER
-            )
-            cart_columns.append(row)
 
         return ft.View(
             "/fourteen",
             controls=[
                 ft.Text("Pick an Pay Online Store", size=50),
-                ft.Column(controls=cart_columns),
+                ft.Text("Your Cart", size=30),
+                ft.Column(
+                    controls=cart_items,
+                    scroll=ft.ScrollMode.AUTO
+                ),
+                ft.Text(f"Total: R{total_cost:.2f}", size=20, weight="bold"),
                 ft.Row([
-                    ft.ElevatedButton("Back to Bakery", on_click=lambda e: page.go("/eight")),
-                ], scroll=ft.ScrollMode.AUTO, alignment=ft.MainAxisAlignment.CENTER, spacing=10),
-                ft.ElevatedButton("Back to Home", on_click=lambda e: page.go("/two")),
-            ],
+                    ft.ElevatedButton("Continue Shopping", on_click=lambda e: page.go("/two")),
+                    ft.ElevatedButton("Checkout", on_click=lambda e: print("Checkout not implemented"))
+                ], alignment=ft.MainAxisAlignment.CENTER),
+                cart_feedback
+            ]
         )
-
-    def add_to_cart(page, product):
-        product_name = product["name"]
-        cart[product_name] = cart.get(product_name, 0) + 1
-        page.add(ft.Text(f"Added {product_name} to cart!"))
-        page.update()
-
-    
 
     def route_change(route):  
         page.views.clear()
