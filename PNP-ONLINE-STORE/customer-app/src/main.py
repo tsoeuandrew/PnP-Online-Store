@@ -135,8 +135,7 @@ def main(page: ft.Page):
     def save_user(e):
         if error_handler():  # Check for errors
             return  # Don't save if there are errors
-        
-        # Create user record
+
         info = {
             "Username": username.value,
             "Password": password.value,
@@ -144,22 +143,20 @@ def main(page: ft.Page):
             "Mobile Number": mobile.value,
             "Physical Address": address.value,
             "Gender": gender.value
-        }# Send data to Flask backend
-        try:
-            response = requests.get(f"http://localhost:5000/api/login")
-            if response.status_code == 200:
-                page.go("/two")  # Navigate to log in page
+        }
 
+        try:
+            response = requests.post("http://localhost:5000/api/save_user", json=info)
+            if response.status_code == 200:
+                page.go("/")  # Navigate to next page
             else:
-                return response.json()
-                feedback.value = response.json()
-                feedback.color = ft.colors.RED
+                feedback.value = response.json().get("error", "Unknown error")
                 page.update()
 
-        except requests.exceptions.RequestException as e:
-            feedback.value = f"Error connecting to server: {str(e)}"
-            feedback.color = ft.colors.RED
+        except requests.exceptions.RequestException as ex:
+            feedback.value = f"Error connecting to server: {str(ex)}"
             page.update()
+
 
     def Login(e):
         clear_feedback()

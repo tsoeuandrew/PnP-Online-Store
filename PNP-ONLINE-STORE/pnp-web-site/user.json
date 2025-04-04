@@ -1,8 +1,18 @@
 [
-    {"Username": "tsoeuandrew",
-    "Password": "login",
-    "ID Number": "0212205221089",
-    "Mobile Number": "0818212104",
-    "Physical Address": "1242Mangaung",
-    "Gender": "Male"}
+    {
+        "Username": "tsoeuandrew",
+        "Password": "login",
+        "ID Number": "0212205221089",
+        "Mobile Number": "0818212104",
+        "Physical Address": "1242Mangaung",
+        "Gender": "Male"
+    },
+    {
+        "Username": "Admin",
+        "Password": "login",
+        "ID Number": "1234567890123",
+        "Mobile Number": "1234567890",
+        "Physical Address": "123 bloe visa",
+        "Gender": "Male"
+    }
 ]
