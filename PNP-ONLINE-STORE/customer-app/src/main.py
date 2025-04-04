@@ -146,13 +146,13 @@ def main(page: ft.Page):
             "Gender": gender.value
         }# Send data to Flask backend
         try:
-            response = requests.post(f"http://localhost:5000/api/save_user", json=info )
-            response_data = response.json()
-
+            response = requests.get(f"http://localhost:5000/api/login")
             if response.status_code == 200:
-                page.go("/")  # Navigate to log in page
+                page.go("/two")  # Navigate to log in page
+
             else:
-                feedback.value = response_data.get["error cant access data from webside"]
+                return response.json()
+                feedback.value = response.json()
                 feedback.color = ft.colors.RED
                 page.update()
 
@@ -164,49 +164,44 @@ def main(page: ft.Page):
     def Login(e):
         clear_feedback()
         has_errors = False
-        try:
-            # Validate username
-            if not username.value.strip():  # Check if the names field is empty
-                username_feedback.value = "username cannot be empty."
-                has_errors = True
-            elif not username.value.replace(" ", "").isalpha():
-                username_feedback.value = "username must only contain alphabetic characters."
-                has_errors = True
 
-            # Vlidate password
-            if len(password.value) <= 4:
-                password_feedback.value = "Pssword must be 4 units or grater long."
-                has_errors = True
-            return has_errors
+        # Validate username
+        if not username.value.strip():
+            username_feedback.value = "Username cannot be empty."
+            has_errors = True
+        elif not username.value.replace(" ", "").isalpha():
+            username_feedback.value = "Username must only contain alphabetic characters."
+            has_errors = True
 
-        except Exception as e:
-            feedback.value = f"Unexpected Error: {str(e)}"
-            has_errors = True  # Mark an error occurred
+        # Validate password
+        if len(password.value.strip()) <= 4:
+            password_feedback.value = "Password must be at least 5 characters long."
+            has_errors = True
 
-        finally:
-            page.update()
-    
         if has_errors:
-            return
- 
-        info = {
-            "Username": username.value,
-            "Password": password.value,
-        }
+            page.update()
+            return  # Exit early if there are validation issues
+
         try:
-            response = requests.post(f"http://localhost:5000/api/login", json=info )
+            # Send POST request with JSON payload
+            info = {
+                "Username": username.value.strip(),
+                "Password": password.value.strip()
+            }
+            response = requests.post("http://localhost:5000/api/login", json=info)
             response_data = response.json()
 
             if response.status_code == 200:
-                feedback.value = response_data.get("message", "Login successful!")
+                feedback.value = response_data.get("message", "Login successful.")
+                page.update()
                 page.go("/two")
             else:
-                feedback.value = response_data.get("error", "unable to fetch data from server")
-                return []
+                feedback.value = response_data.get("error", "Unknown error occurred.")
         except requests.RequestException as e:
             feedback.value = f"Error connecting to server: {str(e)}"
-            return []
+
         page.update()
+
 
     def login_page():
         return ft.View(
