@@ -162,7 +162,8 @@ def main(page: ft.Page):
             page.update()
 
     def Login(e):
-        error_handler()
+        if error_handler():  # Check for errors
+            return  # Don't save if there are errors
         page.go("/two")
 
 
