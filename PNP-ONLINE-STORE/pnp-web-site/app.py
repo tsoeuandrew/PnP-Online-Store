@@ -82,16 +82,29 @@ def save_user():
 def login():
     user = request.get_json()
     
-    username = user.get("username", "").strip()
+    username = user.get("Username", "").strip()
     password = user.get("Password", "")
 
     if not username:
         return jsonify({"error": "Username is required"}), 400
     if not password:
         return jsonify({"error": "password is required"}), 400
+    
     for record in user_data:
-        if record.get("username") == username and record.get("Password") == password:
-            return jsonify({"error": "This user already in the database"}), 400
+        if record.get("Username") == username and record.get("Password") == password:
+            return jsonify({
+                "message": "Login successful",
+                "user": {
+                    "username": record["username"],
+                    "id_number": record["ID Number"],
+                    "mobile": record["Mobile Number"],
+                    "address": record["Physical Address"],
+                    "gender": record["Gender"]
+                }
+            }), 200
+    
+    # If no match is found
+    return jsonify({"error": "Invalid username or password"}), 401
 
 # Generic endpoint to get products by category
 @app.route('/api/products/<category>', methods=['GET'])
