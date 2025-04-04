@@ -162,6 +162,7 @@ def main(page: ft.Page):
             page.update()
 
     def Login(e):
+        error_handler()
         page.go("/two")
 
 
