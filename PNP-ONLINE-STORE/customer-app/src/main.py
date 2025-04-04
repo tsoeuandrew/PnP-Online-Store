@@ -50,7 +50,7 @@ def main(page: ft.Page):
         try:
             # Validate username
             if not username.value.strip():  # Check if the names field is empty
-                username_feedback.value = "udername cannot be empty."
+                username_feedback.value = "username cannot be empty."
                 has_errors = True
             elif not username.value.replace(" ", "").isalpha():
                 username_feedback.value = "username must only contain alphabetic characters."
@@ -58,7 +58,7 @@ def main(page: ft.Page):
 
             # Vlidate password
             if len(password.value) <= 4:
-                password_feedback.value = "ID Number must be 4 units or grater long."
+                password_feedback.value = "Pssword must be 4 units or grater long."
                 has_errors = True
 
             # Validate ID Number
