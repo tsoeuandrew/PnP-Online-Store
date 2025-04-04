@@ -61,7 +61,7 @@ def save_user():
             return jsonify({"error": "This user already in the database"}), 400
             
     new_user = {
-        "username": username,
+        "Username": username,
         "Password": password,
         "ID Number": id_number,
         "Mobile Number": mobile,
@@ -95,7 +95,7 @@ def login():
             return jsonify({
                 "message": "Login successful",
                 "user": {
-                    "username": record["username"],
+                    "username": record["Username"],
                     "id_number": record["ID Number"],
                     "mobile": record["Mobile Number"],
                     "address": record["Physical Address"],
