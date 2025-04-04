@@ -40,11 +40,11 @@ def main(page: ft.Page):
         username_feedback.value = ""
         id_feedback.value = ""
         feedback.value = ""
-        password_feedback = ""
-        mobile_feedback = ""
-        gender_feedback = ""
+        password_feedback.value = ""
+        mobile_feedback.value = ""
+        gender_feedback.value = ""
 
-    def error_handler(e):
+    def error_handler():
         clear_feedback()
         has_errors = False
         try:
@@ -57,7 +57,7 @@ def main(page: ft.Page):
                 has_errors = True
 
             # Vlidate password
-            if len(password) <= 4:
+            if len(password.value) <= 4:
                 password_feedback.value = "ID Number must be 4 units or grater long."
                 has_errors = True
 
@@ -128,12 +128,12 @@ def main(page: ft.Page):
         
         return product_columns
 
-    def toggle_theme():
+    def toggle_theme(e):
         page.theme_mode = ft.ThemeMode.LIGHT if page.theme_mode == ft.ThemeMode.DARK else ft.ThemeMode.DARK
         page.update()
 
     def save_user(e):
-        if error_handler(e):  # Check for errors
+        if error_handler():  # Check for errors
             return  # Don't save if there are errors
         
         # Create user record
@@ -161,7 +161,7 @@ def main(page: ft.Page):
             feedback.color = ft.colors.RED
             page.update()
 
-    def Login():
+    def Login(e):
         page.go("/two")
 
 
