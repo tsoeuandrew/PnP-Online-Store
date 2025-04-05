@@ -36,6 +36,20 @@ def main(page: ft.Page):
         ],
     )
 
+
+    # Cache all products at startup
+    all_products = {}
+    categories = ["fruits", "vegetables", "meat", "drinks", "snacks", "bakery", "dairy", "grains", "cosmetics", "breakfast"]
+    for category in categories:
+        try:
+            response = requests.get(f"http://localhost:5000/api/products/{category.lower()}")
+            if response.status_code == 200:
+                all_products.update({p["name"]: p for p in response.json()})
+            else:
+                print(f"Failed to fetch {category}: {response.status_code}")
+        except requests.RequestException as e:
+            print(f"Error fetching {category}: {e}")
+
     # Clear errors when submitting the form
     def clear_feedback():
         username_feedback.value = ""
@@ -572,14 +586,7 @@ def main(page: ft.Page):
             cart_items = []
             total_cost = 0
             
-            # Fetch all products to get current prices and images
-            all_products = {}
-            categories = ["fruits", "vegetables", "meat", "drinks", "snacks", "bakery", "dairy", "grains", "cosmetics", "breakfast"]
-            for category in categories:
-                products = fetch_products(category)
-                all_products.update({p["name"]: p for p in products})
-
-            # Create cart item displays
+            # Use cached products instead of fetching
             for item_name, quantity in cart.items():
                 product = all_products.get(item_name)
                 if product:
