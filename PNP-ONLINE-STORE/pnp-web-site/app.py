@@ -3,8 +3,7 @@ import json
 
 app = Flask(__name__)
 
-# In-memory cart (for simplicity; in production, use a database)
-cart = {}
+cart = {}       #initialise caet
 
 #open inventory file
 try:
@@ -32,7 +31,7 @@ except json.JSONDecodeError:
 
 @app.route('/api/save_user', methods=['POST'])
 def save_user():
-    user = request.get_json()
+    user = request.get_json() #retrive whole inputs from app
     
     # Extract and validate required fields
     username = user.get("Username", "").strip()
@@ -41,7 +40,8 @@ def save_user():
     mobile = user.get("Mobile Number", "").strip()
     address = user.get("Physical Address", "").strip()
     gender = user.get("Gender")
-
+    
+    #return these value to app if app cant retrive these iputs
     if not username:
         return jsonify({"error": "Username is required"}), 400
     if not password:
@@ -55,12 +55,12 @@ def save_user():
     if not gender:
         return jsonify({"error": "gender is required"}), 400
     
-    # Check for duplicate ID
+    # Check for duplicate ID so person dont register twice
     for record in user_data:
         if record.get("ID Number") == id_number:
             return jsonify({"error": "This user already in the database"}), 400
             
-    new_user = {
+    new_user = {#create new user record
         "Username": username,
         "Password": password,
         "ID Number": id_number,
@@ -72,7 +72,7 @@ def save_user():
 
     # Save updated user data to file
     try:
-        with open("user.json", 'w') as file:  # Fixed: correct filename
+        with open("user.json", 'w') as file:  # open user data
             json.dump(user_data, file, indent=4)
         return jsonify({"message": "Data saved successfully"})
     except Exception as ex:
@@ -138,17 +138,23 @@ def add_to_cart():
                     return jsonify({"error": f"{product_name} is out of stock"}), 400
     return jsonify({"error": f"Product {product_name} not found"}), 404
 
+# Remove item from cart
+@app.route('/api/cart/remove', methods=['POST'])
+def remove_from_cart():
+    data = request.get_json()
+    product_name = data.get('product_name')
+    
+    if product_name in cart:
+        cart[product_name] -= 1
+        if cart[product_name] <= 0:
+            del cart[product_name]
+        return jsonify({"message": f"Removed one {product_name} from cart", "cart": cart})
+    return jsonify({"error": f"{product_name} not in cart"}), 404
+
 # Get cart contents
 @app.route('/api/cart', methods=['GET'])
 def get_cart():
     return jsonify(cart)
-
-# Example: Hello endpoint (from your original frontend)
-@app.route('/api/hello', methods=['POST'])
-def hello():
-    data = request.get_json()
-    name = data.get('name', 'Guest')
-    return jsonify({"reply": f"Hello, {name}!"})
 
 if __name__ == '__main__': 
     app.run(debug=True, port=5000)

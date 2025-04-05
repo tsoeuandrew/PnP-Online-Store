@@ -512,104 +512,131 @@ def main(page: ft.Page):
             ],
         )
 
+    
     # Add to cart function
     def add_to_cart(product):
         product_name = product["name"]
-        cart[product_name] = cart.get(product_name, 0) + 1
-        cart_feedback.value = f"Added {product_name} to cart!"
-        page.update()
-        # Clear feedback after 2 seconds
-        import time
-        time.sleep(2)
-        cart_feedback.value = ""
-        page.update()
+        try:
+            response = requests.post("http://localhost:5000/api/cart/add",json={"product_name": product_name})
+            if response.status_code == 200:
+                cart_feedback.value = response.json().get("message", f"Added {product_name} to cart!")
+            else:
+                cart_feedback.value = response.json().get("error", "Error adding to cart")
+            page.update()
+            
+            # Clear feedback after 2 seconds
+            import time
+            time.sleep(2)
+            cart_feedback.value = ""
+            page.update()
+        except requests.RequestException as e:
+            cart_feedback.value = f"Error connecting to server: {str(e)}"
+            page.update()
 
     # Remove from cart function
     def remove_from_cart(product):
         product_name = product["name"]
-        if product_name in cart:
-            cart[product_name] -= 1
-            if cart[product_name] <= 0:
-                del cart[product_name]
-            cart_feedback.value = f"Removed one {product_name} from cart!"
-        page.update()
-        # Clear feedback after 2 seconds
-        import time
-        time.sleep(2)
-        cart_feedback.value = ""
-        page.update()
-    
+        try:
+            response = requests.post("http://localhost:5000/api/cart/remove",json={"product_name": product_name})
+            if response.status_code == 200:
+                cart_feedback.value = response.json().get("message", f"Removed one {product_name} from cart!")
+            else:
+                cart_feedback.value = response.json().get("error", "Error removing from cart")
+            page.update()
+            
+            # Clear feedback after 0.5 seconds
+            import time
+            time.sleep(0.5)
+            cart_feedback.value = ""
+            page.update()
+        except requests.RequestException as e:
+            cart_feedback.value = f"Error connecting to server: {str(e)}"
+            page.update()
+
     # Cart page function
     def Cart_page():
-        if not cart:
+        try:
+            response = requests.get("http://localhost:5000/api/cart")
+            if response.status_code != 200 or not response.json():
+                return ft.View(
+                    "/fourteen",
+                    controls=[
+                        ft.Text("Pick an Pay Online Store", size=50),
+                        ft.Text("Your cart is empty", size=30),
+                        ft.ElevatedButton("Continue Shopping", on_click=lambda e: page.go("/two")),
+                        cart_feedback
+                    ]
+                )
+
+            cart = response.json()
+            cart_items = []
+            total_cost = 0
+            
+            # Fetch all products to get current prices and images
+            all_products = {}
+            categories = ["fruits", "vegetables", "meat", "drinks", "snacks", "bakery", "dairy", "grains", "cosmetics", "breakfast"]
+            for category in categories:
+                products = fetch_products(category)
+                all_products.update({p["name"]: p for p in products})
+
+            # Create cart item displays
+            for item_name, quantity in cart.items():
+                product = all_products.get(item_name)
+                if product:
+                    subtotal = product["price"] * quantity
+                    total_cost += subtotal
+                    
+                    cart_items.append(
+                        ft.Row(
+                            controls=[
+                                ft.Image(
+                                    src=product.get("image", "default.png"),
+                                    width=100,
+                                    height=100,
+                                    fit=ft.ImageFit.CONTAIN
+                                ),
+                                ft.Column(
+                                    controls=[
+                                        ft.Text(f"{item_name} (x{quantity})", weight="bold"),
+                                        ft.Text(f"Subtotal: R{subtotal:.2f}")
+                                    ]
+                                ),
+                                ft.IconButton(
+                                    icon=ft.Icons.REMOVE,
+                                    on_click=lambda e, p=product: remove_from_cart(p)
+                                )
+                            ],
+                            alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                        )
+                    )
+
             return ft.View(
                 "/fourteen",
                 controls=[
                     ft.Text("Pick an Pay Online Store", size=50),
-                    ft.Text("Your cart is empty", size=30),
+                    ft.Text("Your Cart", size=30),
+                    ft.Column(
+                        controls=cart_items,
+                        scroll=ft.ScrollMode.AUTO
+                    ),
+                    ft.Text(f"Total: R{total_cost:.2f}", size=20, weight="bold"),
+                    ft.Row([
+                        ft.ElevatedButton("Continue Shopping", on_click=lambda e: page.go("/two")),
+                        ft.ElevatedButton("Checkout", on_click=lambda e: print("Checkout not implemented"))
+                    ], alignment=ft.MainAxisAlignment.CENTER),
+                    cart_feedback
+                ]
+            )
+        except requests.RequestException as e:
+            return ft.View(
+                "/fourteen",
+                controls=[
+                    ft.Text("Pick an Pay Online Store", size=50),
+                    ft.Text(f"Error loading cart: {str(e)}", size=30, color="red"),
                     ft.ElevatedButton("Continue Shopping", on_click=lambda e: page.go("/two")),
                     cart_feedback
                 ]
             )
-
-        cart_items = []
-        total_cost = 0
-        
-        # Fetch all products to get current prices and images
-        all_products = {}
-        categories = ["fruits", "vegetables", "meat", "drinks", "snacks", "bakery", "dairy", "grains", "cosmetics", "breakfast"]
-        for category in categories:
-            products = fetch_products(category)
-            all_products.update({p["name"]: p for p in products})
-
-        # Create cart item displays
-        for item_name, quantity in cart.items():
-            product = all_products.get(item_name)
-            if product:
-                subtotal = product["price"] * quantity
-                total_cost += subtotal
-                
-                cart_items.append(
-                    ft.Row(
-                        controls=[
-                            ft.Image(
-                                src=product.get("image", "default.png"),
-                                width=100,
-                                height=100,
-                                fit=ft.ImageFit.CONTAIN
-                            ),
-                            ft.Column(
-                                controls=[
-                                    ft.Text(f"{item_name} (x{quantity})", weight="bold"),
-                                    ft.Text(f"Subtotal: R{subtotal:.2f}")
-                                ]
-                            ),
-                            ft.IconButton(
-                                icon=ft.Icons.REMOVE,  # Changed from ft.icons.REMOVE to ft.Icons.REMOVE
-                                on_click=lambda e, p=product: remove_from_cart(p)
-                            )
-                        ],
-                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN
-                    )
-                )
-
-        return ft.View(
-            "/fourteen",
-            controls=[
-                ft.Text("Pick an Pay Online Store", size=50),
-                ft.Text("Your Cart", size=30),
-                ft.Column(
-                    controls=cart_items,
-                    scroll=ft.ScrollMode.AUTO
-                ),
-                ft.Text(f"Total: R{total_cost:.2f}", size=20, weight="bold"),
-                ft.Row([
-                    ft.ElevatedButton("Continue Shopping", on_click=lambda e: page.go("/two")),
-                    ft.ElevatedButton("Checkout", on_click=lambda e: print("Checkout not implemented"))
-                ], alignment=ft.MainAxisAlignment.CENTER),
-                cart_feedback
-            ]
-        )
 
     def route_change(route):  
         page.views.clear()
