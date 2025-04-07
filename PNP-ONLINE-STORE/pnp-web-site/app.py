@@ -77,6 +77,29 @@ def save_user():
         return jsonify({"message": "Data saved successfully"})
     except Exception as ex:
         return jsonify({"error": f"Error saving data: {str(ex)}"}), 500
+    
+
+# Manager login endpoint
+@app.route('/api/manager/login', methods=['POST'])
+def manager_login():
+    MANAGER_USERNAME = "manager"
+    MANAGER_PASSWORD = "login"
+    user = request.get_json()
+    
+    username = user.get("Username", "")
+    password = user.get("Password", "")
+
+    if not username:
+        return jsonify({"error": "Username is required"}), 400
+    if not password:
+        return jsonify({"error": "password is required"}), 400
+    
+    #manager login details
+    if username == MANAGER_USERNAME and password == MANAGER_PASSWORD:
+        return jsonify("Login Sucessfull"), 200
+    else:
+        return jsonify("Invalid username or password"), 500
+
 
 @app.route('/api/login', methods=['POST'])
 def login():
