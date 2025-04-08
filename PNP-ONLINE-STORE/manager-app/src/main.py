@@ -92,11 +92,11 @@ def main(page: ft.Page):
             response_data = response.json()
 
             if response.status_code == 200:
-                feedback.value = response_data.get("message", "Login successful.")
+                feedback.value = response_data
                 page.update()
                 page.go("/two")
             else:
-                feedback.value = response_data.get("error", "Unknown error occurred.")
+                feedback.value = response_data
         except requests.RequestException as e:
             feedback.value = f"Error connecting to server: {str(e)}"
 
@@ -149,3 +149,9 @@ def main(page: ft.Page):
             page.views.append(home_page())
         elif page.route == "/third":
             page.views.append(stock())
+        page.update()
+
+    page.on_route_change = route_change
+    page.go(page.route)
+
+ft.app(target=main, port=8000)
