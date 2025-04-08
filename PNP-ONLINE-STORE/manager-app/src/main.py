@@ -122,6 +122,10 @@ def main(page: ft.Page):
             "/two",
             controls=[
                 ft.Text("Welcome To Pick An Pay Online Store", size=50),
+                product_name,
+                product_price,
+                product_quantity,
+                product_category,
                 ft.Switch(label="Theme", on_change=toggle_theme),
                 ft.Row([
                     ft.ElevatedButton("Stock", on_click=lambda e: page.go("/third")),
