@@ -178,6 +178,21 @@ def remove_from_cart():
 
 @app.route('/api/cart/checkout', methods=['POST'])
 def checkout():
+    # Get the entered price from the request
+    data = request.get_json()
+    entered_price = float(data.get("entered_price", 0))  # Expecting price from frontend
+
+    # Calculate total price from cart
+    total_cart_price = 0
+    for product_name, quantity in cart.items():
+        for category in products_data.values():
+            for product in category:
+                if product['name'] == product_name:
+                    total_cart_price += product['price'] * quantity
+                    break
+
+    if not total_cart_price == entered_price:
+        return
     # Update inventory
     try:
         for product_name, quantity in cart.items():

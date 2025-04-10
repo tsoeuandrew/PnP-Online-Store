@@ -26,6 +26,7 @@ def main(page: ft.Page):
     mobile = ft.TextField(label="Enter Mobile Number")
     password = ft.TextField(label="Enter Password")
     address = ft.TextField(label="Physical Address", height=100, multiline=True)
+    price_input = ft.TextField(label="Enter Total Price")
     # Gender dropdown
     gender = ft.Dropdown(
         label="Gender",
@@ -638,24 +639,27 @@ def main(page: ft.Page):
                             alignment=ft.MainAxisAlignment.SPACE_BETWEEN
                         )
                     )
-
+        
             return ft.View(
                 "/fourteen",
-                controls=[
-                    ft.Text("Pick an Pay Online Store", size=50),
-                    ft.Text("Your Cart", size=30),
-                    ft.Column(
-                        controls=cart_items,
-                        scroll=ft.ScrollMode.AUTO
-                    ),
-                    ft.Text(f"Total: R{total_cost:.2f}", size=20, weight="bold"),
-                    ft.Row([
-                        ft.ElevatedButton("Continue Shopping", on_click=lambda e: page.go("/two")),
-                        ft.ElevatedButton("Checkout", on_click=checkout),
-                    ], alignment=ft.MainAxisAlignment.CENTER),
-                    cart_feedback
-                ]
-            )
+                    controls=[
+                        ft.Column(
+                            controls=[
+                                ft.Text("Pick an Pay Online Store", size=50),
+                                ft.Text("Your Cart", size=30),
+                                ft.Column(
+                                    controls=cart_items,
+                                ),
+                                ft.Text(f"Total: R{total_cost:.2f}", size=20, weight="bold"),
+                                ft.Row([
+                                    ft.ElevatedButton("Continue Shopping", on_click=lambda e: page.go("/two")),
+                                    ft.ElevatedButton("Checkout", on_click=checkout),
+                                ], alignment=ft.MainAxisAlignment.CENTER),
+                                cart_feedback
+                            ],scroll=ft.ScrollMode.AUTO)
+                    ]
+            )   
+
         except requests.RequestException as e:
             return ft.View(
                 "/fourteen",
