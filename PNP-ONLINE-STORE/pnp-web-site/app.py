@@ -142,7 +142,7 @@ def get_products(category):
 def add_to_cart():
     data = request.get_json()
     product_name = data.get('product_name')
-    
+
     # Check if product exists in inventory and has sufficient quantity
     for category in products_data:
         for product in products_data[category]:
@@ -159,7 +159,9 @@ def add_to_cart():
                         return jsonify({"message": f"Added {product_name} to cart", "cart": cart})
                 else:
                     return jsonify({"error": f"{product_name} is out of stock"}), 400
+                    
     return jsonify({"error": f"Product {product_name} not found"}), 404
+
 
 # Remove item from cart
 @app.route('/api/cart/remove', methods=['POST'])
