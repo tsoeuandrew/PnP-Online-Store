@@ -567,6 +567,28 @@ def main(page: ft.Page):
             cart_feedback.value = f"Error connecting to server: {str(e)}"
             page.update()
 
+
+    def checkout(e):
+        try:
+            response = requests.post("http://localhost:5000/api/cart/checkout")
+            if response.status_code == 200:
+                cart_feedback.value = response.json().get("message", "Checkout successful!")
+                page.go("/two")  # go to home page after successful checkout
+            else:
+                cart_feedback.value = response.json().get("error", "Checkout failed")
+        
+            page.update()
+        
+            # Clear feedback after 2 seconds
+            import time
+            time.sleep(2)
+            cart_feedback.value = ""
+            page.update()
+        
+        except requests.RequestException as e:
+            cart_feedback.value = f"Error connecting to server: {str(e)}"
+            page.update()
+
     # Cart page function
     def Cart_page():
         try:
@@ -629,7 +651,7 @@ def main(page: ft.Page):
                     ft.Text(f"Total: R{total_cost:.2f}", size=20, weight="bold"),
                     ft.Row([
                         ft.ElevatedButton("Continue Shopping", on_click=lambda e: page.go("/two")),
-                        ft.ElevatedButton("Checkout", on_click=lambda e: print("Checkout not implemented"))
+                        ft.ElevatedButton("Checkout", on_click=checkout),
                     ], alignment=ft.MainAxisAlignment.CENTER),
                     cart_feedback
                 ]

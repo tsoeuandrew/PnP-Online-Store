@@ -176,6 +176,34 @@ def remove_from_cart():
         return jsonify({"message": f"Removed one {product_name} from cart", "cart": cart})
     return jsonify({"error": f"{product_name} not in cart"}), 404
 
+@app.route('/api/cart/checkout', methods=['POST'])
+def checkout():
+    # Update inventory
+    try:
+        for product_name, quantity in cart.items():
+            for category in products_data:
+                for product in products_data[category]:
+                    if product['name'] == product_name:
+                        product['quantity'] -= quantity
+                        break
+        
+        # Save updated inventory to file
+        with open("inventory.json", 'w') as file:
+            json.dump(products_data, file, indent=4)
+        
+        # Clear the cart
+        cart.clear()
+        
+        return jsonify({
+            "message": "Checkout successful",
+            "updated_cart": cart
+        }), 200
+        
+    except Exception as ex:
+        return jsonify({"error": f"Error during checkout: {str(ex)}"}), 500
+
+
+
 # Get cart contents
 @app.route('/api/cart', methods=['GET'])
 def get_cart():
