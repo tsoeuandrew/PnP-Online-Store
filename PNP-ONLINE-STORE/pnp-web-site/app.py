@@ -145,19 +145,19 @@ def add_to_cart():
 
     # Check if product exists in inventory and has sufficient quantity
     for category in products_data:
-        for product in products_data[category]:
+        for product in products_data[category]: 
             if product['name'] == product_name:
-                if product['quantity'] > 0:
-                    if product_name in cart:
-                        if product['quantity'] > cart[product_name]:
-                            cart[product_name] += 1
+                if product['quantity'] > 0:         #if product is availabe
+                    if product_name in cart:        #and product in cart
+                        if product['quantity'] > cart[product_name]: 
+                            cart[product_name] += 1         #increment product by
                             return jsonify({"message": f"Added {product_name} to cart", "cart": cart})
                         else:
                             return jsonify({"error": f"Insufficient quantity of {product_name}"}), 400
-                    else:
-                        cart[product_name] = 1
+                    else: #if product not in cart
+                        cart[product_name] = 1 # add product to cart
                         return jsonify({"message": f"Added {product_name} to cart", "cart": cart})
-                else:
+                else:       #if product not available
                     return jsonify({"error": f"{product_name} is out of stock"}), 400
                     
     return jsonify({"error": f"Product {product_name} not found"}), 404

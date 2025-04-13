@@ -2,7 +2,7 @@ import flet as ft
 import requests
 import json
 
-def main(page: ft.Page):
+def main(page: ft.Page):                        #make main page view loyalty
     page.title = "Pick an Pay Online Store"
     page.bgcolor = "black"
     page.window_maximized = True
@@ -38,7 +38,7 @@ def main(page: ft.Page):
     )
 
 
-    # Cache all products at startup
+    # get all products at startup 
     all_products = {}
     categories = ["fruits", "vegetables", "meat", "drinks", "snacks", "bakery", "dairy", "grains", "cosmetics", "breakfast"]
     for category in categories:
@@ -60,6 +60,7 @@ def main(page: ft.Page):
         mobile_feedback.value = ""
         gender_feedback.value = ""
 
+    #function for valition if error occurs on input fields
     def error_handler():
         clear_feedback()
         has_errors = False
@@ -99,7 +100,7 @@ def main(page: ft.Page):
             has_errors = True  # Mark an error occurred
 
         finally:
-            page.update()
+            page.update()  #make sure feedback on screen is always updated
         return has_errors  # Return True if errors exist, False otherwise # Check if the user has entered a valid name
 
     # Function to fetch products from Flask
@@ -115,7 +116,7 @@ def main(page: ft.Page):
             print(f"Error fetching {category}: {e}")
             return []
 
-    # Reusable function to create product display
+    # Reusable function to create product display for viewing products
     def create_product_display(products, default_image_path):
         price_controls = [ft.Text(f"Price: R{product['price']:.2f}") for product in products]
         name_controls = [ft.Text(product["name"], weight="bold") for product in products]
@@ -128,10 +129,11 @@ def main(page: ft.Page):
                     fit=ft.ImageFit.CONTAIN,
                     error_content=ft.Text("No image")
                 ),
-                on_click=lambda e, p=product: add_to_cart(p)
+                on_click=lambda e, p=product: add_to_cart(p)  #when image is cliked add product to cart
             ) for product in products
         ]
 
+        #view produvts in rows of 8
         product_columns = []
         for i in range(0, len(image_controls), 8):
             row = ft.Row(
@@ -148,14 +150,15 @@ def main(page: ft.Page):
         
         return product_columns
 
-    def toggle_theme(e):
+    def toggle_theme(e):        #screen theme
         page.theme_mode = ft.ThemeMode.LIGHT if page.theme_mode == ft.ThemeMode.DARK else ft.ThemeMode.DARK
         page.update()
 
-    def save_user(e):
+    def save_user(e):  #function to run when save puttten is pressed
         if error_handler():  # Check for errors
             return  # Don't save if there are errors
 
+        #create a info dictionry of what is gonna be sent to the server
         info = {
             "Username": username.value,
             "Password": password.value,
@@ -592,7 +595,7 @@ def main(page: ft.Page):
 
     # Cart page function
     def Cart_page():
-        try:
+        try:            #show this at the beggining while cart is empty
             response = requests.get("http://localhost:5000/api/cart")
             if response.status_code != 200 or not response.json():
                 return ft.View(
@@ -609,14 +612,14 @@ def main(page: ft.Page):
             cart_items = []
             total_cost = 0
             
-            # Use cached products instead of fetching
+            # use products indivudualy as collected at the beggining
             for item_name, quantity in cart.items():
                 product = all_products.get(item_name)
-                if product:
+                if product:                                   #calculating total price of goods
                     subtotal = product["price"] * quantity
                     total_cost += subtotal
                     
-                    cart_items.append(
+                    cart_items.append(                      #add products to cart
                         ft.Row(
                             controls=[
                                 ft.Image(
@@ -639,7 +642,8 @@ def main(page: ft.Page):
                             alignment=ft.MainAxisAlignment.SPACE_BETWEEN
                         )
                     )
-        
+
+            #view cart in this format 
             return ft.View(
                 "/fourteen",
                     controls=[
@@ -654,13 +658,14 @@ def main(page: ft.Page):
                                 ft.Row([
                                     ft.ElevatedButton("Continue Shopping", on_click=lambda e: page.go("/two")),
                                     ft.ElevatedButton("Checkout", on_click=checkout),
+                                    price_input,
                                 ], alignment=ft.MainAxisAlignment.CENTER),
                                 cart_feedback
                             ],scroll=ft.ScrollMode.AUTO)
                     ]
             )   
 
-        except requests.RequestException as e:
+        except requests.RequestException as e:  #if unexpected error occcurs returen cart page emptty
             return ft.View(
                 "/fourteen",
                 controls=[
@@ -671,6 +676,7 @@ def main(page: ft.Page):
                 ]
             )
 
+    #function for all page routes
     def route_change(route):  
         page.views.clear()
         if page.route == "/":
