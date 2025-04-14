@@ -574,7 +574,10 @@ def main(page: ft.Page):                        #make main page view loyalty
 
     def checkout(e):
         try:
-            response = requests.post("http://localhost:5000/api/cart/checkout")
+            price = {
+            "price input": price_input.value
+            }
+            response = requests.post("http://localhost:5000/api/cart/checkout",json=price)
             if response.status_code == 200:
                 cart_feedback.value = response.json().get("message", "Checkout successful!")
                 page.go("/two")  # go to home page after successful checkout

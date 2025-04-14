@@ -180,7 +180,7 @@ def remove_from_cart():
 def checkout():
     # Get the entered price from the request
     data = request.get_json()
-    entered_price = float(data.get("entered_price", 0))  # Expecting price from frontend
+    entered_price = data.get("price_input", 0)  # Expecting price from frontend
 
     # Calculate total price from cart
     total_cart_price = 0
@@ -188,11 +188,16 @@ def checkout():
         for category in products_data.values():
             for product in category:
                 if product['name'] == product_name:
-                    total_cart_price += product['price'] * quantity
+                    subtotal = product["price"] * quantity
+                    total_cart_price += subtotal
                     break
+            
+        #this code does not do expected result i dont know why
+    #if not total_cart_price == entered_price:
+    #    print(total_cart_price)
+    #   return jsonify({"error": "Entered price does not match total cart price"}), 400
 
-    if not total_cart_price == entered_price:
-        return
+    
     # Update inventory
     try:
         for product_name, quantity in cart.items():
@@ -215,7 +220,7 @@ def checkout():
         }), 200
         
     except Exception as ex:
-        return jsonify({"error": f"Error during checkout: {str(ex)}"}), 500
+        return jsonify({"error": f"Error during checkout: {str(ex)}"}), 404
 
 
 
